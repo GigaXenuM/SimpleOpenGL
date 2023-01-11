@@ -23,12 +23,12 @@ MainWindow::~MainWindow()
     glfwDestroyWindow(_window);
 }
 
-int MainWindow::width()
+int MainWindow::width() const
 {
     return _width;
 }
 
-int MainWindow::height()
+int MainWindow::height() const
 {
     return _height;
 }
@@ -91,12 +91,12 @@ void MainWindow::draw()
     glBindVertexArray(0);
 }
 
-Color MainWindow::backgroundColor()
+Color MainWindow::backgroundColor() const
 {
     return _backgroundColor;
 }
 
-void MainWindow::setBackgroundColor(Color color)
+void MainWindow::setBackgroundColor(const Color &color)
 {
     _backgroundColor = color;
 }
