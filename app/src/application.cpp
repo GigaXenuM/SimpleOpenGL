@@ -25,11 +25,7 @@ Application::~Application()
 
 int Application::run()
 {
-    _window->create();
-    _window->makeContextCurrent();
-
-    gladLoadGL();
-    glViewport(0, 0, _window->width(), _window->height());
+    _window->init();
 
     /* Loop until the user closes the window */
     while (!_window->shouldClose())
@@ -39,6 +35,8 @@ int Application::run()
 
         Color backgroundColor{ _window->backgroundColor() };
         glClearColor(backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a);
+
+        _window->draw();
 
         _window->swapBuffers();
 

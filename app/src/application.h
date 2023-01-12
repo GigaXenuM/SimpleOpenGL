@@ -7,7 +7,7 @@ class MainWindow;
 class Application : public IApplication
 {
 public:
-    Application(MainWindow *window);
+    explicit Application(MainWindow *window);
     ~Application();
 
     int run() override;

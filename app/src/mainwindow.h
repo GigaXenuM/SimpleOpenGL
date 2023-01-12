@@ -7,7 +7,7 @@ class GLFWwindow;
 class MainWindow
 {
 public:
-    MainWindow(int width, int height, const char *title);
+    explicit MainWindow(int width, int height, const char *title);
     ~MainWindow();
 
     int width();
@@ -15,8 +15,8 @@ public:
 
     int shouldClose();
     void swapBuffers();
-    void makeContextCurrent();
-    void create();
+    void init();
+    void draw();
 
     Color backgroundColor();
     void setBackgroundColor(Color color);
@@ -27,4 +27,9 @@ private:
     int _height{ 0 };
     const char *_title{ nullptr };
     Color _backgroundColor;
+
+    unsigned int _shaderProgram;
+    unsigned int _EBO;
+    unsigned int _VAO;
+    unsigned int _VBO;
 };
