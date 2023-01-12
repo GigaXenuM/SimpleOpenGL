@@ -51,9 +51,12 @@ void MainWindow::init()
     gladLoadGL();
     glViewport(0, 0, _width, _height);
 
-    GLfloat vertices[]{ -0.5f, static_cast<GLfloat>(-0.5 * sqrt(3)) / 3.0f, 0.0f,
-                        0.5f,  static_cast<GLfloat>(-0.5 * sqrt(3)) / 3.0f, 0.0f,
-                        0.0f,  static_cast<GLfloat>(0.5 * sqrt(3)) / 3.0f,  0.0f };
+    GLfloat vertices[] = {
+        0.5f,  0.5f,  0.0f, // top right
+        0.5f,  -0.5f, 0.0f, // bottom right
+        -0.5f, -0.5f, 0.0f, // bottom left
+        -0.5f, 0.5f,  0.0f  // top left
+    };
     GLuint indices[] = { 0, 1, 3, 1, 2, 3 };
 
     Shader vertexShader("resources/vertex.glsl", GL_VERTEX_SHADER);
@@ -86,7 +89,7 @@ void MainWindow::draw()
     glUseProgram(_shaderProgram);
     glBindVertexArray(_VAO);
 
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
     glBindVertexArray(0);
 }
