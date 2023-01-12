@@ -10,16 +10,16 @@ public:
     explicit MainWindow(int width, int height, const char *title);
     ~MainWindow();
 
-    int width();
-    int height();
+    int width() const;
+    int height() const;
 
     int shouldClose();
     void swapBuffers();
     void init();
     void draw();
 
-    Color backgroundColor();
-    void setBackgroundColor(Color color);
+    Color backgroundColor() const;
+    void setBackgroundColor(const Color &color);
 
 private:
     GLFWwindow *_window{ nullptr };
