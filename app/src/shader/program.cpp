@@ -9,7 +9,7 @@ GraphicsShader::Program::Program(unsigned int firstShaderId, unsigned int second
     link(firstShaderId, secondShaderId);
 }
 
-unsigned int GraphicsShader::Program::id()
+unsigned int GraphicsShader::Program::id() const
 {
     return _id;
 }

@@ -2,13 +2,7 @@
 
 #include <string>
 
-class FileLoader
+namespace FileLoader
 {
-public:
-    ~FileLoader();
-
-    static const char *load(const char *path);
-
-private:
-    static char *_data;
+std::string load(const char *path);
 };

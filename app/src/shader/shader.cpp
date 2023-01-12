@@ -14,8 +14,11 @@ Shader::Shader(const char *pathToSource, unsigned int shaderType)
 unsigned int Shader::compile(const char *pathToSource, unsigned int shaderType)
 {
     _shaderId = glCreateShader(shaderType);
-    const char *shaderSource{ FileLoader::load(pathToSource) };
-    glShaderSource(_shaderId, 1, &shaderSource, nullptr);
+
+    const std::string shaderSource{ FileLoader::load(pathToSource) };
+    const char *shaderSourceCStr{ shaderSource.c_str() };
+
+    glShaderSource(_shaderId, 1, &shaderSourceCStr, nullptr);
     glCompileShader(_shaderId);
 
     GLint success;
@@ -34,7 +37,7 @@ unsigned int Shader::compile(const char *pathToSource, unsigned int shaderType)
     return _shaderId;
 }
 
-unsigned int Shader::id()
+unsigned int Shader::id() const
 {
     return _shaderId;
 }

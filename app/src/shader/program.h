@@ -12,7 +12,7 @@ class Program : public IShaderWrapper
 public:
     explicit Program(unsigned int firstShaderId, unsigned int secondShaderId);
 
-    unsigned int id() override;
+    unsigned int id() const override;
 
 private:
     unsigned int link(unsigned int firstShaderId, unsigned int secondShaderId);

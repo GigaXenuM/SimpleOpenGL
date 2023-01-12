@@ -2,5 +2,5 @@
 
 class IShaderWrapper
 {
-    virtual unsigned int id() = 0;
+    virtual unsigned int id() const = 0;
 };
