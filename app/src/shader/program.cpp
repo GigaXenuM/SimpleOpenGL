@@ -4,17 +4,17 @@
 
 #include <iostream>
 
-GraphicsShader::Program::Program(unsigned int firstShaderId, unsigned int secondShaderId)
+Shader::Program::Program(unsigned int firstShaderId, unsigned int secondShaderId)
 {
     link(firstShaderId, secondShaderId);
 }
 
-unsigned int GraphicsShader::Program::id() const
+unsigned int Shader::Program::id() const
 {
     return _id;
 }
 
-unsigned int GraphicsShader::Program::link(unsigned int firstShaderId, unsigned int secondShaderId)
+unsigned int Shader::Program::link(unsigned int firstShaderId, unsigned int secondShaderId)
 {
     _id = glCreateProgram();
     glAttachShader(_id, firstShaderId);
