@@ -4,6 +4,11 @@
 
 class GLFWwindow;
 
+namespace Scene
+{
+class Scene;
+}
+
 class MainWindow
 {
 public:
@@ -18,18 +23,16 @@ public:
     void init();
     void draw();
 
-    Color backgroundColor() const;
     void setBackgroundColor(const Color &color);
 
 private:
+    void prepareForDrawing();
+
     GLFWwindow *_window{ nullptr };
+    Scene::Scene *_scene{ nullptr };
+
     int _width{ 0 };
     int _height{ 0 };
     const char *_title{ nullptr };
     Color _backgroundColor;
-
-    unsigned int _shaderProgram;
-    unsigned int _EBO;
-    unsigned int _VAO;
-    unsigned int _VBO;
 };

@@ -6,12 +6,12 @@
 
 #include <iostream>
 
-Shader::Shader(const char *pathToSource, unsigned int shaderType)
+Shader::Shader::Shader(const char *pathToSource, unsigned int shaderType)
 {
     compile(pathToSource, shaderType);
 }
 
-unsigned int Shader::compile(const char *pathToSource, unsigned int shaderType)
+unsigned int Shader::Shader::compile(const char *pathToSource, unsigned int shaderType)
 {
     _shaderId = glCreateShader(shaderType);
 
@@ -37,7 +37,7 @@ unsigned int Shader::compile(const char *pathToSource, unsigned int shaderType)
     return _shaderId;
 }
 
-unsigned int Shader::id() const
+unsigned int Shader::Shader::id() const
 {
     return _shaderId;
 }

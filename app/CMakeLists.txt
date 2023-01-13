@@ -11,6 +11,9 @@ set(HEADER_FILES
     src/shader/ishaderwrapper.h
     src/shader/shader.h
     src/shader/program.h
+    src/scene/private/gpudatacontroller/gpudatacontroller.h
+
+    src/scene/items/testitem.h
 )
 
 # Add source files
@@ -22,6 +25,8 @@ set(SOURCE_FILES
     src/scene/scene.cpp
     src/shader/shader.cpp
     src/shader/program.cpp
+    src/scene/private/gpudatacontroller/gpudatacontroller.cpp
+    src/scene/items/testitem.cpp
 )
 
 include_directories(

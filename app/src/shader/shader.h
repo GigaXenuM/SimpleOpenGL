@@ -2,6 +2,8 @@
 
 #include "ishaderwrapper.h"
 
+namespace Shader
+{
 class Shader : public IShaderWrapper
 {
 public:
@@ -14,3 +16,4 @@ private:
 
     unsigned int _shaderId;
 };
+} // namespace Shader

@@ -15,7 +15,7 @@ Application::Application(MainWindow *window) : _window{ window }
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    _window->setBackgroundColor({ 0.3f, 0.7f, 0.4f, 1.0f });
+    _window->setBackgroundColor({ 0.3f, 0.3f, 0.3f, 1.0f });
 }
 
 Application::~Application()
@@ -30,12 +30,6 @@ int Application::run()
     /* Loop until the user closes the window */
     while (!_window->shouldClose())
     {
-        /* Render here */
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        Color backgroundColor{ _window->backgroundColor() };
-        glClearColor(backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a);
-
         _window->draw();
 
         _window->swapBuffers();

@@ -4,7 +4,7 @@
 
 #include <vector>
 
-namespace GraphicsShader
+namespace Shader
 {
 
 class Program : public IShaderWrapper
