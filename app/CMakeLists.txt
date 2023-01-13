@@ -13,6 +13,8 @@ set(HEADER_FILES
     src/shader/program.h
     src/scene/private/gpudatacontroller/gpudatacontroller.h
 
+    src/scene/camera/camera.h
+
     src/scene/items/testitem.h
 )
 
@@ -26,6 +28,9 @@ set(SOURCE_FILES
     src/shader/shader.cpp
     src/shader/program.cpp
     src/scene/private/gpudatacontroller/gpudatacontroller.cpp
+
+    src/scene/camera/camera.cpp
+
     src/scene/items/testitem.cpp
 )
 
