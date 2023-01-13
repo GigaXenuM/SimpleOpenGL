@@ -30,14 +30,13 @@ set(SOURCE_FILES
 )
 
 include_directories(
-    "${CMAKE_SOURCE_DIR}/library/include"
     "${CMAKE_SOURCE_DIR}/app/src"
 )
 
 # we don't want to copy if we're building in the source dir
 if (NOT CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_CURRENT_BINARY_DIR)
     add_custom_target(copy_resources ALL
-       ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/resources ${CMAKE_CURRENT_BINARY_DIR}/resources
+       ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/resources ${CMAKE_BINARY_DIR}/bin/resources
        DEPENDS ${PROJECT_NAME}
        )
 endif()
