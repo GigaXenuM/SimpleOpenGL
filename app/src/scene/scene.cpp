@@ -3,6 +3,7 @@
 #include "private/gpudatacontroller/gpudatacontroller.h"
 #include "shader/shader.h"
 #include "shader/program.h"
+#include "items/item.h"
 
 #include <glad/glad.h>
 
@@ -36,7 +37,17 @@ void Scene::Scene::draw()
     glUseProgram(_shaderProgramId);
 
     // TODO (tkachmaryk): Change this to the loop where will draw all items on the scene
-    _gpuDataController->draw(GL_TRIANGLES, 6);
+    Item rectangle(GL_TRIANGLES, 6);
+
+    _items.push_back(&rectangle);
+
+    for (const auto &item : _items)
+        _gpuDataController->draw(*item);
+}
+
+std::vector<Scene::Item *> Scene::Scene::items()
+{
+    return _items;
 }
 
 void Scene::Scene::createShaderProgram(const char *vertexShaderSource,

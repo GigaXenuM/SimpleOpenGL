@@ -1,5 +1,6 @@
 #include "gpudatacontroller.h"
 
+#include "scene/items/item.h"
 #include <glad/glad.h>
 
 Scene::GPUDataController::GPUDataController()
@@ -13,11 +14,11 @@ void Scene::GPUDataController::generateBuffers()
     glGenVertexArrays(1, &_vertexArrayId);
 }
 
-void Scene::GPUDataController::draw(unsigned int element, unsigned int pointCount)
+void Scene::GPUDataController::draw(const Item &item)
 {
     glBindVertexArray(_vertexArrayId);
 
-    glDrawElements(element, pointCount, GL_UNSIGNED_INT, 0);
+    glDrawElements(item.getElement(), item.getPointCount(), GL_UNSIGNED_INT, 0);
 
     glBindVertexArray(0);
 }

@@ -5,6 +5,7 @@
 namespace Scene
 {
 
+class Item;
 class GPUDataController
 {
 public:
@@ -12,7 +13,7 @@ public:
 
     void generateBuffers();
 
-    void draw(unsigned int element, unsigned int pointCount);
+    void draw(const Item &item);
 
     void setData(size_t layout, size_t packSize, const std::vector<float> &data,
                  const std::vector<unsigned int> &indices);
