@@ -14,6 +14,7 @@ set(HEADER_FILES
     src/scene/private/gpudatacontroller/gpudatacontroller.h
 
     src/scene/camera/camera.h
+    src/scene/items/item.h
 
     src/scene/items/testitem.h
 )
@@ -30,6 +31,7 @@ set(SOURCE_FILES
     src/scene/private/gpudatacontroller/gpudatacontroller.cpp
 
     src/scene/camera/camera.cpp
+    src/scene/items/item.cpp
 
     src/scene/items/testitem.cpp
 )
