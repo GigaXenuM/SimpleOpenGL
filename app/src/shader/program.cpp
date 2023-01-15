@@ -14,6 +14,11 @@ unsigned int Shader::Program::id() const
     return _id;
 }
 
+void Shader::Program::setMat4(const std::string &name, const glm::mat4 &mat) const
+{
+    glUniformMatrix4fv(glGetUniformLocation(_id, name.c_str()), 1, GL_FALSE, &mat[0][0]);
+}
+
 unsigned int Shader::Program::link(unsigned int firstShaderId, unsigned int secondShaderId)
 {
     _id = glCreateProgram();

@@ -23,7 +23,7 @@ public:
     void init();
     void draw();
 
-    void setBackgroundColor(const Color &color);
+    void setBackgroundColor(const Tools::Color &color);
 
 private:
     void prepareForDrawing();
@@ -34,5 +34,5 @@ private:
     int _width{ 0 };
     int _height{ 0 };
     const char *_title{ nullptr };
-    Color _backgroundColor;
+    Tools::Color _backgroundColor;
 };

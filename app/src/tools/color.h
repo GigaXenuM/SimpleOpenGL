@@ -1,5 +1,7 @@
 #pragma once
 
+namespace Tools
+{
 struct Color
 {
     float r;
@@ -7,3 +9,4 @@ struct Color
     float b;
     float a;
 };
+} // namespace Tools

@@ -3,35 +3,49 @@ cmake_minimum_required(VERSION 3.20)
 # Add header files
 set(HEADER_FILES
     src/mainwindow.h
+
     src/iapplication.h
     src/application.h
-    src/tools/color.h
+
+    src/tools/color.h    
+    src/tools/texture.h
+    src/tools/vertex.h
+    src/tools/stb_image.h
+
     src/fileLoader/fileloader.h
-    src/scene/scene.h
+
+    src/scene/scene.h    
+    src/scene/mesh/mesh.h
+    src/scene/items/testitem.h
+    src/scene/camera/camera.h
+
     src/shader/ishaderwrapper.h
     src/shader/shader.h
     src/shader/program.h
-    src/scene/private/gpudatacontroller/gpudatacontroller.h
 
-    src/scene/camera/camera.h
-
-    src/scene/items/testitem.h
+    src/modelloader/modelloader.h
 )
 
 # Add source files
 set(SOURCE_FILES
     src/main.cpp
+
     src/mainwindow.cpp
+
     src/application.cpp
     src/fileLoader/fileloader.cpp
-    src/scene/scene.cpp
+
+    src/tools/stb_image.cpp
+
     src/shader/shader.cpp
     src/shader/program.cpp
-    src/scene/private/gpudatacontroller/gpudatacontroller.cpp
 
+    
+    src/scene/scene.cpp
+    src/scene/mesh/mesh.cpp
     src/scene/camera/camera.cpp
 
-    src/scene/items/testitem.cpp
+    src/modelloader/modelloader.cpp
 )
 
 include_directories(
