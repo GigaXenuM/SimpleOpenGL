@@ -1,5 +1,7 @@
 #pragma once
 
+#include "texturetype.h"
+
 #include <string>
 
 namespace Tools
@@ -8,7 +10,7 @@ namespace Tools
 struct Texture
 {
     unsigned int id;
-    std::string type;
+    TextureType type;
     std::string path;
 };
 } // namespace Tools

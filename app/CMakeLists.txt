@@ -11,6 +11,7 @@ set(HEADER_FILES
     src/tools/texture.h
     src/tools/vertex.h
     src/tools/stb_image.h
+    src/tools/texturetype.h
 
     src/fileLoader/fileloader.h
 

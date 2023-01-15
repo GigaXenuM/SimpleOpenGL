@@ -4,7 +4,6 @@
 #include "shader/program.h"
 #include "shader/shader.h"
 #include "shader/program.h"
-#include "tools/stb_image.h"
 
 #include <glad/glad.h>
 
@@ -19,6 +18,7 @@ Scene::Scene::Scene()
 Scene::Scene::~Scene()
 {
     delete _model;
+    delete _shaderProgram;
 }
 
 void Scene::Scene::init()

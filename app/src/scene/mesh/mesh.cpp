@@ -2,6 +2,10 @@
 
 #include <glad/glad.h>
 
+#include <iostream>
+
+std::string getTextureName(TextureType type);
+
 Scene::Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices,
                   std::vector<Texture> textures)
     : _vertices{ vertices }, _indices{ indices }, _textures{ textures }
@@ -56,23 +60,33 @@ void Scene::Mesh::draw(unsigned int programId) const
     unsigned int normalNr = 1;
     unsigned int heightNr = 1;
 
-    for (unsigned int i = 0; i < _textures.size(); i++)
+    for (unsigned int textureIndex = 0; textureIndex < _textures.size(); textureIndex++)
     {
-        glActiveTexture(GL_TEXTURE0 + i);
+        glActiveTexture(GL_TEXTURE0 + textureIndex);
 
         std::string number;
-        std::string name = _textures[i].type;
-        if (name == "texture_diffuse")
+        TextureType type = _textures[textureIndex].type;
+        switch (type)
+        {
+        case TextureType::Diffuse:
             number = std::to_string(diffuseNr++);
-        else if (name == "texture_specular")
+            break;
+        case TextureType::Specular:
             number = std::to_string(specularNr++);
-        else if (name == "texture_normal")
+            break;
+        case TextureType::Normal:
             number = std::to_string(normalNr++);
-        else if (name == "texture_height")
+            break;
+        case TextureType::Ambient:
             number = std::to_string(heightNr++);
+            break;
+        default:
+            break;
+        }
 
-        glUniform1i(glGetUniformLocation(programId, (name + number).c_str()), i);
-        glBindTexture(GL_TEXTURE_2D, _textures[i].id);
+        glUniform1i(glGetUniformLocation(programId, (getTextureName(type) + number).c_str()),
+                    textureIndex);
+        glBindTexture(GL_TEXTURE_2D, _textures[textureIndex].id);
     }
 
     glBindVertexArray(_vertexArrayId);
@@ -80,4 +94,22 @@ void Scene::Mesh::draw(unsigned int programId) const
     glBindVertexArray(0);
 
     glActiveTexture(GL_TEXTURE0);
+}
+
+std::string getTextureName(TextureType type)
+{
+    switch (type)
+    {
+    case TextureType::Diffuse:
+        return "texture_diffuse";
+    case TextureType::Specular:
+        return "texture_specular";
+    case TextureType::Normal:
+        return "texture_normal";
+    case TextureType::Ambient:
+        return "texture_ambient";
+    default:
+        std::cout << "ERROR: Undefiled texture type" << std::endl;
+        return "";
+    }
 }
