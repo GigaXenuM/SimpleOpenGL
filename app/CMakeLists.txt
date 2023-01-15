@@ -15,8 +15,6 @@ set(HEADER_FILES
 
     src/scene/camera/camera.h
     src/scene/items/item.h
-
-    src/scene/items/testitem.h
 )
 
 # Add source files
@@ -32,8 +30,6 @@ set(SOURCE_FILES
 
     src/scene/camera/camera.cpp
     src/scene/items/item.cpp
-
-    src/scene/items/testitem.cpp
 )
 
 include_directories(
