@@ -1,7 +1,7 @@
 #pragma once
 
 #include "tools/texture.h"
-#include "scene/mesh/mesh.h"
+#include "model/mesh/mesh.h"
 
 #include <assimp/material.h>
 
@@ -12,25 +12,30 @@ class aiNode;
 class aiScene;
 class aiMesh;
 
-class ModelLoader
+namespace Model
+{
+
+class ModelItem
 {
 public:
-    explicit ModelLoader(const std::string &path);
+    explicit ModelItem(const std::string &path);
+    ~ModelItem();
 
-    void draw(unsigned int programId) const;
+    void loadModel();
+
+    const std::vector<Scene::Mesh *> &meshes() const;
 
 private:
-    void loadModel(const std::string &path);
     void processNode(aiNode *node, const aiScene *scene);
-
-    Scene::Mesh processMesh(aiMesh *mesh, const aiScene *scene);
-
+    Scene::Mesh *processMesh(aiMesh *mesh, const aiScene *scene);
     std::vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType aiType,
                                               TextureType type);
-
     unsigned int TextureFromFile(const char *path, const std::string &directory);
 
+    std::vector<Scene::Mesh *> _meshes;
+
     std::vector<Tools::Texture> _texturesLoaded;
-    std::vector<Scene::Mesh> _meshes;
     std::string _directory;
+    std::string _path;
 };
+} // namespace Model

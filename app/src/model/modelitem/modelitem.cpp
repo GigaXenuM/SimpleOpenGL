@@ -1,4 +1,4 @@
-#include "modelloader.h"
+#include "modelitem.h"
 
 #include "tools/stb_image.h"
 #include "tools/texturetype.h"
@@ -11,22 +11,26 @@
 
 #include <iostream>
 
-ModelLoader::ModelLoader(const std::string &path)
+Model::ModelItem::ModelItem(const std::string &path) : _path{ path }
 {
-    loadModel(path);
 }
 
-void ModelLoader::draw(unsigned int programId) const
+Model::ModelItem::~ModelItem()
 {
-    for (const auto &mesh : _meshes)
-        mesh.draw(programId);
+    for (auto *mesh : _meshes)
+        delete mesh;
 }
 
-void ModelLoader::loadModel(const std::string &path)
+const std::vector<Scene::Mesh *> &Model::ModelItem::meshes() const
+{
+    return _meshes;
+}
+
+void Model::ModelItem::loadModel()
 {
     Assimp::Importer importer;
-    const aiScene *scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs
-                                                       | aiProcess_CalcTangentSpace);
+    const aiScene *scene = importer.ReadFile(_path, aiProcess_Triangulate | aiProcess_FlipUVs
+                                                        | aiProcess_CalcTangentSpace);
 
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
     {
@@ -34,12 +38,12 @@ void ModelLoader::loadModel(const std::string &path)
         return;
     }
 
-    _directory = path.substr(0, path.find_last_of('/'));
+    _directory = _path.substr(0, _path.find_last_of('/'));
 
     processNode(scene->mRootNode, scene);
 }
 
-void ModelLoader::processNode(aiNode *node, const aiScene *scene)
+void Model::ModelItem::processNode(aiNode *node, const aiScene *scene)
 {
     for (unsigned int i = 0; i < node->mNumMeshes; i++)
     {
@@ -52,7 +56,7 @@ void ModelLoader::processNode(aiNode *node, const aiScene *scene)
     }
 }
 
-Scene::Mesh ModelLoader::processMesh(aiMesh *mesh, const aiScene *scene)
+Scene::Mesh *Model::ModelItem::processMesh(aiMesh *mesh, const aiScene *scene)
 {
     std::vector<Vertex> vertices;
     std::vector<unsigned int> indices;
@@ -122,17 +126,17 @@ Scene::Mesh ModelLoader::processMesh(aiMesh *mesh, const aiScene *scene)
         = loadMaterialTextures(material, aiTextureType_AMBIENT, TextureType::Ambient);
     textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
 
-    return Scene::Mesh(vertices, indices, textures);
+    return new Scene::Mesh(vertices, indices, textures);
 }
 
-std::vector<Texture> ModelLoader::loadMaterialTextures(aiMaterial *mat, aiTextureType aiType,
-                                                       TextureType type)
+std::vector<Texture> Model::ModelItem::loadMaterialTextures(aiMaterial *material,
+                                                            aiTextureType aiType, TextureType type)
 {
     std::vector<Texture> textures;
-    for (unsigned int i = 0; i < mat->GetTextureCount(aiType); i++)
+    for (unsigned int i = 0; i < material->GetTextureCount(aiType); i++)
     {
         aiString str;
-        mat->GetTexture(aiType, i, &str);
+        material->GetTexture(aiType, i, &str);
 
         bool skip = false;
         for (const auto &texture : _texturesLoaded)
@@ -145,7 +149,7 @@ std::vector<Texture> ModelLoader::loadMaterialTextures(aiMaterial *mat, aiTextur
         }
 
         Texture texture;
-        texture.id = TextureFromFile(str.C_Str(), this->_directory);
+        texture.id = TextureFromFile(str.C_Str(), _directory);
         texture.type = type;
         texture.path = str.C_Str();
         textures.push_back(texture);
@@ -154,7 +158,7 @@ std::vector<Texture> ModelLoader::loadMaterialTextures(aiMaterial *mat, aiTextur
     return textures;
 }
 
-unsigned int ModelLoader::TextureFromFile(const char *path, const std::string &directory)
+unsigned int Model::ModelItem::TextureFromFile(const char *path, const std::string &directory)
 {
     std::string filename = std::string(path);
     filename = directory + '/' + filename;
@@ -187,7 +191,7 @@ unsigned int ModelLoader::TextureFromFile(const char *path, const std::string &d
     }
     else
     {
-        std::cout << "Texture failed to load at path: " << path << std::endl;
+        std::cout << "Texture failed to load at path: " << directory + '/' + path << std::endl;
         stbi_image_free(data);
     }
 

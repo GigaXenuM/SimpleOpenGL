@@ -13,17 +13,19 @@ set(HEADER_FILES
     src/tools/stb_image.h
     src/tools/texturetype.h
 
-    src/fileLoader/fileloader.h
-
-    src/scene/scene.h    
-    src/scene/mesh/mesh.h
+    src/scene/scene.h
+    src/model/mesh/mesh.h
     src/scene/camera/camera.h
+    src/scene/items/iitem.h
+    src/scene/items/graphicsitem.h
 
     src/shader/ishaderwrapper.h
     src/shader/shader.h
     src/shader/program.h
 
-    src/modelloader/modelloader.h
+    src/model/fileLoader/fileloader.h
+    src/model/modelitem/modelitem.h
+    src/model/mesh/mesh.h
 )
 
 # Add source files
@@ -33,19 +35,19 @@ set(SOURCE_FILES
     src/mainwindow.cpp
 
     src/application.cpp
-    src/fileLoader/fileloader.cpp
 
     src/tools/stb_image.cpp
 
     src/shader/shader.cpp
     src/shader/program.cpp
 
-    
     src/scene/scene.cpp
-    src/scene/mesh/mesh.cpp
     src/scene/camera/camera.cpp
+    src/scene/items/graphicsitem.cpp
 
-    src/modelloader/modelloader.cpp
+    src/model/fileLoader/fileloader.cpp
+    src/model/modelitem/modelitem.cpp
+    src/model/mesh/mesh.cpp
 )
 
 include_directories(
