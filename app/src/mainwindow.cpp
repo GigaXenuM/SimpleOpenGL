@@ -51,6 +51,8 @@ void MainWindow::init()
     gladLoadGL();
     glViewport(0, 0, _width, _height);
 
+    glEnable(GL_DEPTH_TEST);
+
     _scene->init();
 }
 
@@ -67,7 +69,7 @@ void MainWindow::draw()
     _scene->draw();
 }
 
-void MainWindow::setBackgroundColor(const Color &color)
+void MainWindow::setBackgroundColor(const Tools::Color &color)
 {
     _backgroundColor = color;
 }

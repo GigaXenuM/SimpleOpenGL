@@ -1,8 +1,13 @@
 #pragma once
 
+class ModelLoader;
+namespace Shader
+{
+class Program;
+}
+
 namespace Scene
 {
-class GPUDataController;
 
 class Scene
 {
@@ -12,13 +17,12 @@ public:
 
     void init();
 
-    void draw();
+    void draw() const;
 
 private:
     void createShaderProgram(const char *vertexShaderSource, const char *fragmentShaderSource);
 
-    GPUDataController *_gpuDataController{ nullptr };
-
-    unsigned int _shaderProgramId{ 0 };
+    ModelLoader *_model{ nullptr };
+    Shader::Program *_shaderProgram{ nullptr };
 };
 } // namespace Scene
