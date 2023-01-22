@@ -8,13 +8,16 @@ namespace Scene
 class Camera
 {
 public:
-    Camera(double fov, double aspectRatio, double renderDistance);
+    explicit Camera(double fov, double aspectRatio, double renderDistance);
 
-    void setPosition(glm::vec3 position);
-    glm::vec3 position();
+    void setPosition(const glm::vec3 &position);
+    const glm::vec3 &position() const;
 
-    glm::mat4 projection();
-    glm::mat4 view();
+    void setDirection(const glm::vec3 &direction);
+    const glm::vec3 &direction() const;
+
+    const glm::mat4 &projection() const;
+    const glm::mat4 &view() const;
 
 private:
     void update();
@@ -26,8 +29,8 @@ private:
     double _renderDistance;
 
     glm::vec3 _position;
-    glm::vec3 _cameraFront;
     glm::vec3 _direction;
+    glm::vec3 _cameraFront;
 
     glm::vec3 _up;
     glm::vec3 _cameraRight;

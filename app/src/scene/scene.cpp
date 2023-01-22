@@ -1,5 +1,6 @@
 #include "scene.h"
 
+#include "camera/camera.h"
 #include "model/modelitem/modelitem.h"
 #include "shader/program.h"
 #include "shader/shader.h"
@@ -13,7 +14,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-Scene::Scene::Scene()
+Scene::Scene::Scene(int width, int height)
+    : _camera{ new Camera(45.0, static_cast<double>(width) / static_cast<double>(height), 100.0) }
 {
 }
 
@@ -32,26 +34,21 @@ void Scene::Scene::init()
     _modelItem->loadModel();
 
     _items.push_back(new GraphicsItem(_modelItem));
+
+    _camera->setPosition({ -7.0, 1.0, 0.0 });
+    _camera->setDirection({ 1.0, 0.0, 0.0 });
 }
 
 void Scene::Scene::draw() const
 {
     glUseProgram(_shaderProgram->id());
 
-    // TODO(tkachmaryk): need to realize this in separate class Scene::Camera
-    {
-        glm::mat4 projection
-            = glm::perspective(glm::radians(45.0f), (float)1024 / (float)720, 0.1f, 100.0f);
-        glm::mat4 view = glm::lookAt(glm::vec3(-7.0f, 1.0f, 0.0f),
-                                     glm::vec3(-7.0f, 1.0f, 0.0f) + glm::vec3(1.0f, 0.0f, 0.0f),
-                                     glm::vec3(0.0f, 1.0f, 0.0f));
-        _shaderProgram->setMat4("projection", projection);
-        _shaderProgram->setMat4("view", view);
-    }
-
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
     model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+
+    _shaderProgram->setMat4("projection", _camera->projection());
+    _shaderProgram->setMat4("view", _camera->view());
     _shaderProgram->setMat4("model", model);
 
     for (const auto *item : _items)

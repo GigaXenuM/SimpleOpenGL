@@ -16,11 +16,12 @@ namespace Scene
 {
 
 class IItem;
+class Camera;
 
 class Scene
 {
 public:
-    Scene();
+    explicit Scene(int width, int height);
     ~Scene();
 
     void init();
@@ -32,10 +33,9 @@ public:
 private:
     void createShaderProgram(const char *vertexShaderSource, const char *fragmentShaderSource);
 
+    Camera *_camera{ nullptr };
     std::shared_ptr<Model::ModelItem> _modelItem{ nullptr };
-
     Shader::Program *_shaderProgram{ nullptr };
-
     std::vector<IItem *> _items;
 };
 } // namespace Scene

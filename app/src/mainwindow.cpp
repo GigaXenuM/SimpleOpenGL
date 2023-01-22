@@ -14,7 +14,7 @@ MainWindow::MainWindow(int width, int height, const char *title)
       _height{ height },
       _title{ title },
       _backgroundColor{ .0f, .0f, .0f, .0f },
-      _scene{ new Scene::Scene }
+      _scene{ new Scene::Scene(width, height) }
 {
 }
 
