@@ -26,6 +26,8 @@ set(HEADER_FILES
     src/model/fileLoader/fileloader.h
     src/model/modelitem/modelitem.h
     src/model/mesh/mesh.h
+
+    src/keyboard/keyboard.h
 )
 
 # Add source files
