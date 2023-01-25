@@ -30,6 +30,7 @@ set(HEADER_FILES
     src/keyboard/keyboard.h
 
     src/event/event.h
+    src/event/mouseevents/mousemoveevent.h
 )
 
 # Add source files
@@ -52,6 +53,8 @@ set(SOURCE_FILES
     src/model/fileLoader/fileloader.cpp
     src/model/modelitem/modelitem.cpp
     src/model/mesh/mesh.cpp
+
+    src/event/mouseevents/mousemoveevent.cpp
 )
 
 include_directories(
