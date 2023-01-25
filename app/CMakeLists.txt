@@ -28,6 +28,8 @@ set(HEADER_FILES
     src/model/mesh/mesh.h
 
     src/keyboard/keyboard.h
+
+    src/event/event.h
 )
 
 # Add source files
