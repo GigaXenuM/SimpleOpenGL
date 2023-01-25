@@ -9,11 +9,10 @@ namespace Scene
 class Scene;
 }
 
-class MainWindow
+class MainWindow final
 {
 public:
-    explicit MainWindow(int width, int height, const char *title);
-    ~MainWindow();
+    static MainWindow &instance();
 
     int width() const;
     int height() const;
@@ -26,6 +25,11 @@ public:
     void setBackgroundColor(const Tools::Color &color);
 
 private:
+    explicit MainWindow(int width, int height, const char *title);
+    ~MainWindow();
+
+    static MainWindow _instance;
+
     void prepareForDrawing();
 
     GLFWwindow *_window{ nullptr };

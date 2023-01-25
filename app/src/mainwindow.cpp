@@ -8,6 +8,8 @@
 
 #include <iostream>
 
+MainWindow MainWindow::_instance{ 1024, 720, "Window" };
+
 MainWindow::MainWindow(int width, int height, const char *title)
     : _window{ nullptr },
       _width{ width },
@@ -21,6 +23,11 @@ MainWindow::MainWindow(int width, int height, const char *title)
 MainWindow::~MainWindow()
 {
     glfwDestroyWindow(_window);
+}
+
+MainWindow &MainWindow::instance()
+{
+    return _instance;
 }
 
 int MainWindow::width() const

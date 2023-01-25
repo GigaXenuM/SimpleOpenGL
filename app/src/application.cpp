@@ -7,7 +7,7 @@
 
 #include "tools/color.h"
 
-Application::Application(MainWindow *window) : _window{ window }
+Application::Application() : _window{ MainWindow::instance() }
 {
     glfwInit();
 
@@ -15,7 +15,7 @@ Application::Application(MainWindow *window) : _window{ window }
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    _window->setBackgroundColor({ 0.3f, 0.3f, 0.3f, 1.0f });
+    _window.setBackgroundColor({ 0.3f, 0.3f, 0.3f, 1.0f });
 }
 
 Application::~Application()
@@ -25,14 +25,14 @@ Application::~Application()
 
 int Application::run()
 {
-    _window->init();
+    _window.init();
 
     /* Loop until the user closes the window */
-    while (!_window->shouldClose())
+    while (!_window.shouldClose())
     {
-        _window->draw();
+        _window.draw();
 
-        _window->swapBuffers();
+        _window.swapBuffers();
 
         glfwPollEvents();
     }
