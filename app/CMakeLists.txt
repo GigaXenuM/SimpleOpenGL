@@ -18,6 +18,8 @@ set(HEADER_FILES
     src/scene/camera/camera.h
     src/scene/items/iitem.h
     src/scene/items/graphicsitem.h
+    src/scene/eventhandler.h
+    src/scene/private/sceneimpl.h
 
     src/shader/ishaderwrapper.h
     src/shader/shader.h
@@ -51,6 +53,7 @@ set(SOURCE_FILES
     src/scene/scene.cpp
     src/scene/camera/camera.cpp
     src/scene/items/graphicsitem.cpp
+    src/scene/private/sceneimpl.cpp
 
     src/model/fileLoader/fileloader.cpp
     src/model/modelitem/modelitem.cpp

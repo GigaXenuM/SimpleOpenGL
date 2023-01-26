@@ -24,6 +24,9 @@ public:
 
     void setBackgroundColor(const Tools::Color &color);
 
+    static void keyboardCallback(GLFWwindow *window, int key, int scancode, int action, int mods);
+    static void cursorPosCallback(GLFWwindow *window, double xpos, double ypos);
+
 private:
     explicit MainWindow(int width, int height, const char *title);
     ~MainWindow();

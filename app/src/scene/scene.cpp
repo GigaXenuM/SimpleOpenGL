@@ -1,5 +1,7 @@
 #include "scene.h"
 
+#include <glad/glad.h>
+
 #include "camera/camera.h"
 #include "model/modelitem/modelitem.h"
 #include "shader/program.h"
@@ -8,15 +10,16 @@
 
 #include "items/graphicsitem.h"
 
-#include <glad/glad.h>
-
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include <iostream>
+
 Scene::Scene::Scene(int width, int height)
     : _camera{ new Camera(45.0, static_cast<double>(width) / static_cast<double>(height), 100.0) }
 {
+    addEventHandler(_camera);
 }
 
 Scene::Scene::~Scene()
@@ -41,6 +44,8 @@ void Scene::Scene::init()
 
 void Scene::Scene::draw() const
 {
+    _camera->update();
+
     glUseProgram(_shaderProgram->id());
 
     glm::mat4 model = glm::mat4(1.0f);
@@ -58,6 +63,13 @@ void Scene::Scene::draw() const
 void Scene::Scene::addItem(IItem *item)
 {
     _items.push_back(item);
+}
+
+void Scene::Scene::handleEvent(Event *event)
+{
+    using Private::Scene::SceneImpl;
+
+    SceneImpl::handleEvent(event);
 }
 
 const std::vector<Scene::IItem *> &Scene::Scene::items()

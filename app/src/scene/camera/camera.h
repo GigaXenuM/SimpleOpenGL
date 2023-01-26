@@ -1,12 +1,19 @@
 #pragma once
 
+#include "scene/eventhandler.h"
+
 #include <glm/glm.hpp>
+
+class KeyPressEvent;
+class KeyReleaseEvent;
+class MouseMoveEvent;
 
 namespace Scene
 {
 
-class Camera
+class Camera : public EventHandler
 {
+
 public:
     explicit Camera(double fov, double aspectRatio, double renderDistance);
 
@@ -19,8 +26,16 @@ public:
     const glm::mat4 &projection() const;
     const glm::mat4 &view() const;
 
-private:
+    // EventHandler interface
+    void handleEvent(Event *event) override;
+
+    void keyPressEvent(KeyPressEvent *event);
+    void keyReleaseEvent(KeyReleaseEvent *event);
+    void mouseMoveEvent(MouseMoveEvent *event);
+
     void update();
+
+private:
     void updateDirection();
     void updateView();
 

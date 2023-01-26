@@ -1,0 +1,27 @@
+#pragma once
+
+#include "scene/eventhandler.h"
+
+#include <vector>
+
+class Event;
+
+namespace Private::Scene
+{
+
+using ::Scene::EventHandler;
+
+class SceneImpl : public EventHandler
+{
+protected:
+    SceneImpl() = default;
+    virtual ~SceneImpl() = default;
+
+public:
+    void addEventHandler(EventHandler *handler);
+    virtual void handleEvent(Event *event) override;
+
+private:
+    std::vector<EventHandler *> _eventHandlers;
+};
+} // namespace Private::Scene

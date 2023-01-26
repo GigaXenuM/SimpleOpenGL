@@ -16,6 +16,7 @@ enum class Key
 
 enum class Modifier
 {
+    None = 0x0,
     Shift = GLFW_MOD_SHIFT,
     Control = GLFW_MOD_CONTROL,
     Alt = GLFW_MOD_ALT,
