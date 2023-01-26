@@ -31,6 +31,7 @@ set(HEADER_FILES
 
     src/event/event.h
     src/event/mouseevents/mousemoveevent.h
+    src/event/keyevents/keypressevent.h
 )
 
 # Add source files
@@ -55,6 +56,7 @@ set(SOURCE_FILES
     src/model/mesh/mesh.cpp
 
     src/event/mouseevents/mousemoveevent.cpp
+    src/event/keyevents/keypressevent.cpp
 )
 
 include_directories(
