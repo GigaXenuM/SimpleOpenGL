@@ -32,6 +32,7 @@ set(HEADER_FILES
     src/event/event.h
     src/event/mouseevents/mousemoveevent.h
     src/event/keyevents/keypressevent.h
+    src/event/keyevents/keyreleaseevent.h
 )
 
 # Add source files
@@ -57,6 +58,7 @@ set(SOURCE_FILES
 
     src/event/mouseevents/mousemoveevent.cpp
     src/event/keyevents/keypressevent.cpp
+    src/event/keyevents/keyreleaseevent.cpp
 )
 
 include_directories(
