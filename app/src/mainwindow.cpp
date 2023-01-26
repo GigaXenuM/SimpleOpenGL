@@ -4,10 +4,6 @@
 
 #include "scene/scene.h"
 
-#include "event/keyevents/keypressevent.h"
-#include "event/keyevents/keyreleaseevent.h"
-#include "event/mouseevents/mousemoveevent.h"
-
 #include <GLFW/glfw3.h>
 #include <cmath>
 
@@ -45,16 +41,6 @@ int MainWindow::height() const
     return _height;
 }
 
-int MainWindow::shouldClose()
-{
-    return glfwWindowShouldClose(_window);
-}
-
-void MainWindow::swapBuffers()
-{
-    glfwSwapBuffers(_window);
-}
-
 void MainWindow::init()
 {
     _window = glfwCreateWindow(_width, _height, _title, NULL, NULL);
@@ -68,9 +54,6 @@ void MainWindow::init()
     glEnable(GL_DEPTH_TEST);
 
     _scene->init();
-
-    glfwSetCursorPosCallback(_window, cursorPosCallback);
-    glfwSetKeyCallback(_window, keyboardCallback);
 }
 
 void MainWindow::prepareForDrawing()
@@ -91,25 +74,7 @@ void MainWindow::setBackgroundColor(const Tools::Color &color)
     _backgroundColor = color;
 }
 
-void MainWindow::keyboardCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
+void MainWindow::handleEvent(Event *event)
 {
-    MainWindow *handle{ static_cast<MainWindow *>(glfwGetWindowUserPointer(window)) };
-
-    if (action == GLFW_PRESS || action == GLFW_REPEAT)
-    {
-        KeyPressEvent event(Keyboard::Key{ key }, Keyboard::Modifier{ mods });
-        handle->_scene->handleEvent(&event);
-        return;
-    }
-
-    KeyReleaseEvent event(Keyboard::Key{ key }, Keyboard::Modifier{ mods });
-    handle->_scene->handleEvent(&event);
-}
-
-void MainWindow::cursorPosCallback(GLFWwindow *window, double x, double y)
-{
-    MainWindow *handle{ static_cast<MainWindow *>(glfwGetWindowUserPointer(window)) };
-
-    MouseMoveEvent event(x, y);
-    handle->_scene->handleEvent(&event);
+    _scene->handleEvent(event);
 }

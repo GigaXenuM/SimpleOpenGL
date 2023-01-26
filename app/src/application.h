@@ -13,5 +13,5 @@ public:
     int run() override;
 
 private:
-    MainWindow &_window;
+    MainWindow *_window;
 };

@@ -3,6 +3,7 @@
 #include "tools/color.h"
 
 class GLFWwindow;
+class Event;
 
 namespace Scene
 {
@@ -17,15 +18,17 @@ public:
     int width() const;
     int height() const;
 
-    int shouldClose();
-    void swapBuffers();
     void init();
     void draw();
 
     void setBackgroundColor(const Tools::Color &color);
 
-    static void keyboardCallback(GLFWwindow *window, int key, int scancode, int action, int mods);
-    static void cursorPosCallback(GLFWwindow *window, double xpos, double ypos);
+    void handleEvent(Event *event);
+
+    __forceinline GLFWwindow *getGLFWWindow()
+    {
+        return _window;
+    }
 
 private:
     explicit MainWindow(int width, int height, const char *title);
