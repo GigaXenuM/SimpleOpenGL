@@ -7,11 +7,11 @@ class MainWindow;
 class Application : public IApplication
 {
 public:
-    explicit Application(MainWindow *window);
+    explicit Application();
     ~Application();
 
     int run() override;
 
 private:
-    MainWindow *_window{ nullptr };
+    MainWindow *_window;
 };

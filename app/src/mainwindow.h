@@ -3,29 +3,39 @@
 #include "tools/color.h"
 
 class GLFWwindow;
+class Event;
 
 namespace Scene
 {
 class Scene;
 }
 
-class MainWindow
+class MainWindow final
 {
 public:
-    explicit MainWindow(int width, int height, const char *title);
-    ~MainWindow();
+    static MainWindow &instance();
 
     int width() const;
     int height() const;
 
-    int shouldClose();
-    void swapBuffers();
     void init();
     void draw();
 
     void setBackgroundColor(const Tools::Color &color);
 
+    void handleEvent(Event *event);
+
+    __forceinline GLFWwindow *getGLFWWindow()
+    {
+        return _window;
+    }
+
 private:
+    explicit MainWindow(int width, int height, const char *title);
+    ~MainWindow();
+
+    static MainWindow _instance;
+
     void prepareForDrawing();
 
     GLFWwindow *_window{ nullptr };

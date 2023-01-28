@@ -18,6 +18,8 @@ set(HEADER_FILES
     src/scene/camera/camera.h
     src/scene/items/iitem.h
     src/scene/items/graphicsitem.h
+    src/scene/eventhandler.h
+    src/scene/private/sceneimpl.h
 
     src/shader/ishaderwrapper.h
     src/shader/shader.h
@@ -26,6 +28,13 @@ set(HEADER_FILES
     src/model/fileLoader/fileloader.h
     src/model/modelitem/modelitem.h
     src/model/mesh/mesh.h
+
+    src/keyboard/keyboard.h
+
+    src/event/event.h
+    src/event/mouseevents/mousemoveevent.h
+    src/event/keyevents/keypressevent.h
+    src/event/keyevents/keyreleaseevent.h
 )
 
 # Add source files
@@ -44,10 +53,15 @@ set(SOURCE_FILES
     src/scene/scene.cpp
     src/scene/camera/camera.cpp
     src/scene/items/graphicsitem.cpp
+    src/scene/private/sceneimpl.cpp
 
     src/model/fileLoader/fileloader.cpp
     src/model/modelitem/modelitem.cpp
     src/model/mesh/mesh.cpp
+
+    src/event/mouseevents/mousemoveevent.cpp
+    src/event/keyevents/keypressevent.cpp
+    src/event/keyevents/keyreleaseevent.cpp
 )
 
 include_directories(
