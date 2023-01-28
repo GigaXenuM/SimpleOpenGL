@@ -1,6 +1,6 @@
 #pragma once
 
-#include "scene/eventhandler.h"
+#include "event/eventhandler.h"
 
 #include <vector>
 

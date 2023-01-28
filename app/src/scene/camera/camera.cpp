@@ -2,7 +2,7 @@
 
 #include "event/event.h"
 
-#include "keyboard/keyboard.h"
+#include "event/keyevents/keyboard.h"
 
 #include "event/keyevents/keypressevent.h"
 #include "event/keyevents/keyreleaseevent.h"

@@ -18,7 +18,6 @@ set(HEADER_FILES
     src/scene/camera/camera.h
     src/scene/items/iitem.h
     src/scene/items/graphicsitem.h
-    src/scene/eventhandler.h
     src/scene/private/sceneimpl.h
 
     src/shader/ishaderwrapper.h
@@ -29,10 +28,10 @@ set(HEADER_FILES
     src/model/modelitem/modelitem.h
     src/model/mesh/mesh.h
 
-    src/keyboard/keyboard.h
-
     src/event/event.h
+    src/event/eventhandler.h
     src/event/mouseevents/mousemoveevent.h
+    src/event/keyevents/keyboard.h
     src/event/keyevents/keypressevent.h
     src/event/keyevents/keyreleaseevent.h
 )
