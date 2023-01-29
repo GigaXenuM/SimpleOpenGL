@@ -38,8 +38,7 @@ void Scene::Scene::init()
 
     _items.push_back(new GraphicsItem(_modelItem));
 
-    _camera->setPosition({ -7.0, 1.0, 0.0 });
-    _camera->setDirection({ 1.0, 0.0, 0.0 });
+    _camera->setPosition({ 0.0, 0.0, 7.0 });
 }
 
 void Scene::Scene::draw() const
@@ -49,7 +48,7 @@ void Scene::Scene::draw() const
     glUseProgram(_shaderProgram->id());
 
     glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+    model = glm::rotate(model, 1.5f, glm::vec3(0.0f, 1.0f, 0.0f));
     model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
 
     _shaderProgram->setMat4("projection", _camera->projection());

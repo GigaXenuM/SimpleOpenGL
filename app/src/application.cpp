@@ -56,6 +56,9 @@ void keyboardCallback(GLFWwindow *window, int key, int scancode, int action, int
 {
     MainWindow *handle{ static_cast<MainWindow *>(glfwGetWindowUserPointer(window)) };
 
+    if (key == GLFW_KEY_ESCAPE)
+        glfwSetWindowShouldClose(window, true);
+
     if (action == GLFW_PRESS || action == GLFW_REPEAT)
     {
         KeyPressEvent event(Keyboard::Key{ key }, Keyboard::Modifier{ mods });
