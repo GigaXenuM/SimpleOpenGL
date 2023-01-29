@@ -42,6 +42,7 @@ private:
     void updateView();
 
     void move();
+    void lookAt();
 
     void calculateRendererTime();
 
@@ -53,7 +54,6 @@ private:
 
     glm::vec3 _position;
     glm::vec3 _direction;
-    glm::vec3 _cameraFront;
 
     glm::vec3 _up;
     glm::vec3 _cameraRight;
@@ -69,5 +69,13 @@ private:
 
     float _deltaTime{ 0.0f };
     float _lastFrame{ 0.0f };
+
+    double _yaw{ -90.0f };
+    double _pitch{ 0.0f };
+
+    double _lastMousePosX{ 0.0f };
+    double _lastMousePosY{ 0.0f };
+
+    bool _firstMouse{ true };
 };
 } // namespace Scene

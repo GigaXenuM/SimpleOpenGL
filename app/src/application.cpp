@@ -34,6 +34,8 @@ int Application::run()
     _window->init();
     GLFWwindow *glfwWindow{ _window->getGLFWWindow() };
 
+    glfwSetInputMode(glfwWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
     glfwSetCursorPosCallback(glfwWindow, cursorPosCallback);
     glfwSetKeyCallback(glfwWindow, keyboardCallback);
 

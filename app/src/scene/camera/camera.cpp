@@ -14,14 +14,11 @@ Scene::Camera::Camera(double fov, double aspectRatio, double renderDistance)
       _aspectRatio{ aspectRatio },
       _renderDistance{ renderDistance },
       _position{ 0.0 },
-      _direction{ 0.0, 0.0, -1.0 },
-      _cameraFront{ glm::normalize(_position - _direction) },
+      _direction{ 0.0, 0.0, 0.0 },
       _up{ 0.0, 1.0, 0.0 },
-      _cameraRight{ glm::normalize(glm::cross(_up, _cameraFront)) },
-      _cameraUp{ glm::cross(_cameraFront, _cameraRight) },
-      _projection{ glm::perspective(glm::radians(_fov), _aspectRatio, 0.1, _renderDistance) },
-      _view{ glm::lookAt(_position, _position + _direction, _cameraUp) }
+      _projection{ glm::perspective(glm::radians(_fov), _aspectRatio, 0.1, _renderDistance) }
 {
+    update();
 }
 
 void Scene::Camera::setPosition(const glm::vec3 &position)
@@ -85,16 +82,32 @@ void Scene::Camera::keyReleaseEvent(KeyReleaseEvent *event)
 
 void Scene::Camera::mouseMoveEvent(MouseMoveEvent *event)
 {
+    if (_firstMouse)
+    {
+        _lastMousePosX = event->x();
+        _lastMousePosY = event->y();
+        _firstMouse = false;
+    }
+
+    _yaw += (event->x() - _lastMousePosX) * 0.05f;
+    _pitch -= (event->y() - _lastMousePosY) * 0.05f;
+    _lastMousePosX = event->x();
+    _lastMousePosY = event->y();
+
+    if (_pitch > 89.0f)
+        _pitch = 89.0f;
+    if (_pitch < -89.0f)
+        _pitch = -89.0f;
 }
 
 void Scene::Camera::update()
 {
     calculateRendererTime();
+    lookAt();
     move();
 
-    _cameraFront = glm::normalize(_position - _direction);
-    _cameraRight = glm::normalize(glm::cross(_up, _cameraFront));
-    _cameraUp = glm::cross(_cameraFront, _cameraRight);
+    _cameraRight = glm::normalize(glm::cross(_direction, _up));
+    _cameraUp = glm::cross(_cameraRight, _direction);
     _view = glm::lookAt(_position, _position + _direction, _cameraUp);
 }
 
@@ -110,6 +123,14 @@ void Scene::Camera::move()
         _position += glm::normalize(glm::cross(_direction, _cameraUp)) * cameraSpeed;
     if (_moveLeft)
         _position -= glm::normalize(glm::cross(_direction, _cameraUp)) * cameraSpeed;
+}
+
+void Scene::Camera::lookAt()
+{
+    _direction.x = cos(glm::radians(_yaw)) * cos(glm::radians(_pitch));
+    _direction.y = sin(glm::radians(_pitch));
+    _direction.z = sin(glm::radians(_yaw)) * cos(glm::radians(_pitch));
+    _direction = glm::normalize(_direction);
 }
 
 void Scene::Camera::calculateRendererTime()
