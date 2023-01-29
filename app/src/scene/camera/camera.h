@@ -2,6 +2,8 @@
 
 #include "event/eventhandler.h"
 
+#include "event/keyevents/keyboard.h"
+
 #include <glm/glm.hpp>
 
 class KeyPressEvent;
@@ -39,6 +41,12 @@ private:
     void updateDirection();
     void updateView();
 
+    void move();
+
+    void calculateRendererTime();
+
+    void processKey(Keyboard::Key key, bool pressed);
+
     double _fov;
     double _aspectRatio;
     double _renderDistance;
@@ -53,5 +61,13 @@ private:
 
     glm::mat4 _projection;
     glm::mat4 _view;
+
+    bool _moveFront{ false };
+    bool _moveBack{ false };
+    bool _moveLeft{ false };
+    bool _moveRight{ false };
+
+    float _deltaTime{ 0.0f };
+    float _lastFrame{ 0.0f };
 };
 } // namespace Scene

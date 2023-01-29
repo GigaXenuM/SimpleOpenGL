@@ -2,16 +2,12 @@
 
 #include "event/event.h"
 
-#include "event/keyevents/keyboard.h"
-
 #include "event/keyevents/keypressevent.h"
 #include "event/keyevents/keyreleaseevent.h"
 #include "event/mouseevents/mousemoveevent.h"
 
 #include "glm/ext/matrix_clip_space.hpp"
 #include "glm/ext/matrix_transform.hpp"
-
-#include <iostream>
 
 Scene::Camera::Camera(double fov, double aspectRatio, double renderDistance)
     : _fov{ fov },
@@ -42,7 +38,6 @@ const glm::vec3 &Scene::Camera::position() const
 void Scene::Camera::setDirection(const glm::vec3 &direction)
 {
     _direction = glm::normalize(direction);
-    update();
 }
 
 const glm::vec3 &Scene::Camera::direction() const
@@ -80,10 +75,12 @@ void Scene::Camera::handleEvent(Event *event)
 
 void Scene::Camera::keyPressEvent(KeyPressEvent *event)
 {
+    processKey(event->key(), true);
 }
 
 void Scene::Camera::keyReleaseEvent(KeyReleaseEvent *event)
 {
+    processKey(event->key(), false);
 }
 
 void Scene::Camera::mouseMoveEvent(MouseMoveEvent *event)
@@ -92,8 +89,44 @@ void Scene::Camera::mouseMoveEvent(MouseMoveEvent *event)
 
 void Scene::Camera::update()
 {
+    calculateRendererTime();
+    move();
+
     _cameraFront = glm::normalize(_position - _direction);
     _cameraRight = glm::normalize(glm::cross(_up, _cameraFront));
     _cameraUp = glm::cross(_cameraFront, _cameraRight);
     _view = glm::lookAt(_position, _position + _direction, _cameraUp);
+}
+
+void Scene::Camera::move()
+{
+    float cameraSpeed{ 5.0f * _deltaTime };
+
+    if (_moveFront)
+        _position += cameraSpeed * _direction;
+    if (_moveBack)
+        _position -= cameraSpeed * _direction;
+    if (_moveRight)
+        _position += glm::normalize(glm::cross(_direction, _cameraUp)) * cameraSpeed;
+    if (_moveLeft)
+        _position -= glm::normalize(glm::cross(_direction, _cameraUp)) * cameraSpeed;
+}
+
+void Scene::Camera::calculateRendererTime()
+{
+    float currentFrame = glfwGetTime();
+    _deltaTime = currentFrame - _lastFrame;
+    _lastFrame = currentFrame;
+}
+
+void Scene::Camera::processKey(Keyboard::Key key, bool pressed)
+{
+    if (key == Keyboard::Key::A)
+        _moveLeft = pressed;
+    if (key == Keyboard::Key::D)
+        _moveRight = pressed;
+    if (key == Keyboard::Key::W)
+        _moveFront = pressed;
+    if (key == Keyboard::Key::S)
+        _moveBack = pressed;
 }
