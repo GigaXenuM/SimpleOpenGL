@@ -89,15 +89,19 @@ void Scene::Camera::mouseMoveEvent(MouseMoveEvent *event)
         _firstMouse = false;
     }
 
-    _yaw += (event->x() - _lastMousePosX) * 0.05f;
-    _pitch -= (event->y() - _lastMousePosY) * 0.05f;
+    const float sensivity{ 0.05f };
+
+    _yaw += (event->x() - _lastMousePosX) * sensivity;
+    _pitch -= (event->y() - _lastMousePosY) * sensivity;
     _lastMousePosX = event->x();
     _lastMousePosY = event->y();
 
-    if (_pitch > 89.0f)
-        _pitch = 89.0f;
-    if (_pitch < -89.0f)
-        _pitch = -89.0f;
+    const float maxHorisontalAngle{ 89.0f };
+
+    if (_pitch > maxHorisontalAngle)
+        _pitch = maxHorisontalAngle;
+    if (_pitch < -maxHorisontalAngle)
+        _pitch = -maxHorisontalAngle;
 }
 
 void Scene::Camera::update()
@@ -113,7 +117,7 @@ void Scene::Camera::update()
 
 void Scene::Camera::move()
 {
-    float cameraSpeed{ 5.0f * _deltaTime };
+    const float cameraSpeed{ 5.0f * _deltaTime };
 
     if (_moveFront)
         _position += cameraSpeed * _direction;
