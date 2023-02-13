@@ -2,6 +2,8 @@
 
 #include "iitem.h"
 
+#include <glm/glm.hpp>
+
 #include <memory>
 
 namespace Model
@@ -19,7 +21,11 @@ public:
 
     void draw(unsigned int programId) const override;
 
+    void setModel(glm::mat4 model);
+    const glm::mat4 &model() const override;
+
 private:
     std::shared_ptr<Model::ModelItem> _modelItem;
+    glm::mat4 _model;
 };
 } // namespace Scene

@@ -13,3 +13,13 @@ void Scene::GraphicsItem::draw(unsigned int programId) const
     for (const auto &mesh : _modelItem->meshes())
         mesh->draw(programId);
 }
+
+void Scene::GraphicsItem::setModel(glm::mat4 model)
+{
+    _model = model;
+}
+
+const glm::mat4 &Scene::GraphicsItem::model() const
+{
+    return _model;
+}

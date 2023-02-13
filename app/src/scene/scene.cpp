@@ -32,11 +32,28 @@ Scene::Scene::~Scene()
 void Scene::Scene::init()
 {
     createShaderProgram("resources/vertex.glsl", "resources/fragment.glsl");
-    _modelItem
-        = std::make_shared<Model::ModelItem>("resources/objects/laptop/Lowpoly_Notebook_2.obj");
+    _modelItem = std::make_shared<Model::ModelItem>("resources/objects/rose/rose.obj");
     _modelItem->loadModel();
 
-    _items.push_back(new GraphicsItem(_modelItem));
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::rotate(model, 1.5f, glm::vec3(0.0f, 1.0f, 0.0f));
+    model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+
+    auto laptop{ new GraphicsItem(_modelItem) };
+    laptop->setModel(model);
+
+    _items.push_back(laptop);
+
+    model = glm::mat4(1.0f);
+    model = glm::rotate(model, static_cast<float>(std::sin(glfwGetTime())),
+                        glm::vec3(0.0f, 1.0f, 0.0f));
+    model = glm::translate(model, glm::vec3(6.0f, 1.0f, 1.0f));
+    model = glm::scale(model, glm::vec3(0.08f, 0.08f, 0.08f));
+
+    laptop = new GraphicsItem(_modelItem);
+    laptop->setModel(model);
+
+    _items.push_back(laptop);
 
     _camera->setPosition({ 0.0, 0.0, 7.0 });
 }
@@ -47,16 +64,18 @@ void Scene::Scene::draw() const
 
     glUseProgram(_shaderProgram->id());
 
-    glm::mat4 model = glm::mat4(1.0f);
-    model = glm::rotate(model, 1.5f, glm::vec3(0.0f, 1.0f, 0.0f));
-    model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-
     _shaderProgram->setMat4("projection", _camera->projection());
     _shaderProgram->setMat4("view", _camera->view());
-    _shaderProgram->setMat4("model", model);
 
     for (const auto *item : _items)
+    {
+        _shaderProgram->setMat4("model", item->model());
+        auto &model = const_cast<glm::mat4 &>(item->model());
+        model = glm::rotate(model, static_cast<float>(std::sin(glfwGetTime()) * 0.0005),
+                            glm::vec3(0.0f, 1.0f, 0.0f));
+
         item->draw(_shaderProgram->id());
+    }
 }
 
 void Scene::Scene::addItem(IItem *item)
