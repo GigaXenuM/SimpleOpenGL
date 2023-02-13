@@ -9,7 +9,7 @@
 
 #include <iostream>
 
-MainWindow MainWindow::_instance{ 1024, 720, "Window" };
+MainWindow MainWindow::_instance{ 1366, 768, "Window" };
 
 MainWindow::MainWindow(int width, int height, const char *title)
     : _window{ nullptr },

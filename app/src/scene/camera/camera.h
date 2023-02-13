@@ -1,6 +1,8 @@
 #pragma once
 
-#include "scene/eventhandler.h"
+#include "event/eventhandler.h"
+
+#include "event/keyevents/keyboard.h"
 
 #include <glm/glm.hpp>
 
@@ -39,13 +41,19 @@ private:
     void updateDirection();
     void updateView();
 
+    void move();
+    void lookAt();
+
+    void calculateRendererTime();
+
+    void processKey(Keyboard::Key key, bool pressed);
+
     double _fov;
     double _aspectRatio;
     double _renderDistance;
 
     glm::vec3 _position;
     glm::vec3 _direction;
-    glm::vec3 _cameraFront;
 
     glm::vec3 _up;
     glm::vec3 _cameraRight;
@@ -53,5 +61,21 @@ private:
 
     glm::mat4 _projection;
     glm::mat4 _view;
+
+    bool _moveFront{ false };
+    bool _moveBack{ false };
+    bool _moveLeft{ false };
+    bool _moveRight{ false };
+
+    float _deltaTime{ 0.0f };
+    float _lastFrame{ 0.0f };
+
+    double _yaw{ -90.0f };
+    double _pitch{ 0.0f };
+
+    double _lastMousePosX{ 0.0f };
+    double _lastMousePosY{ 0.0f };
+
+    bool _firstMouse{ true };
 };
 } // namespace Scene
