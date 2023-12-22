@@ -32,28 +32,18 @@ Scene::Scene::~Scene()
 void Scene::Scene::init()
 {
     createShaderProgram("resources/vertex.glsl", "resources/fragment.glsl");
-    _modelItem = std::make_shared<Model::ModelItem>("resources/objects/rose/rose.obj");
+    _modelItem
+        = std::make_shared<Model::ModelItem>("resources/objects/laptop/Lowpoly_Notebook_2.obj");
     _modelItem->loadModel();
 
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::rotate(model, 1.5f, glm::vec3(0.0f, 1.0f, 0.0f));
     model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
 
-    auto laptop{ new GraphicsItem(_modelItem) };
-    laptop->setModel(model);
+    auto graphicsItem{ new GraphicsItem(_modelItem) };
+    graphicsItem->setModel(model);
 
-    _items.push_back(laptop);
-
-    model = glm::mat4(1.0f);
-    model = glm::rotate(model, static_cast<float>(std::sin(glfwGetTime())),
-                        glm::vec3(0.0f, 1.0f, 0.0f));
-    model = glm::translate(model, glm::vec3(6.0f, 1.0f, 1.0f));
-    model = glm::scale(model, glm::vec3(0.08f, 0.08f, 0.08f));
-
-    laptop = new GraphicsItem(_modelItem);
-    laptop->setModel(model);
-
-    _items.push_back(laptop);
+    _items.push_back(graphicsItem);
 
     _camera->setPosition({ 0.0, 0.0, 7.0 });
 }
