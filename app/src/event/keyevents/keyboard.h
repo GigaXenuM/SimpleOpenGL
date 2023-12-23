@@ -11,7 +11,14 @@ enum class Key
     D = GLFW_KEY_D,
     S = GLFW_KEY_S,
     W = GLFW_KEY_W,
-    Space = GLFW_KEY_SPACE
+    Left = GLFW_KEY_LEFT,
+    Right = GLFW_KEY_RIGHT,
+    Up = GLFW_KEY_UP,
+    Down = GLFW_KEY_DOWN,
+    Space = GLFW_KEY_SPACE,
+    Escape = GLFW_KEY_ESCAPE,
+
+    MAX_SIZE = GLFW_KEY_LAST
 };
 
 enum class Modifier
@@ -25,9 +32,18 @@ enum class Modifier
     NumLock = GLFW_MOD_NUM_LOCK
 };
 
-enum class Actions
+inline Modifier operator|(Modifier a, Modifier b)
 {
-    Pressed = GLFW_PRESS,
-    Released = GLFW_RELEASE
-};
+    return static_cast<Modifier>(static_cast<int>(a) | static_cast<int>(b));
+}
+
+inline Modifier operator&(Modifier a, Modifier b)
+{
+    return static_cast<Modifier>(static_cast<int>(a) & static_cast<int>(b));
+}
+
+inline Modifier &operator|=(Modifier &a, Modifier b)
+{
+    return a = a | b;
+}
 } // namespace Keyboard

@@ -5,9 +5,6 @@
 #include "scene/scene.h"
 
 #include <GLFW/glfw3.h>
-#include <cmath>
-
-#include <iostream>
 
 MainWindow MainWindow::_instance{ 1366, 768, "Window" };
 

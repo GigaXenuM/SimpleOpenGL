@@ -72,10 +72,5 @@ private:
 
     double _yaw{ -90.0f };
     double _pitch{ 0.0f };
-
-    double _lastMousePosX{ 0.0f };
-    double _lastMousePosY{ 0.0f };
-
-    bool _firstMouse{ true };
 };
 } // namespace Scene

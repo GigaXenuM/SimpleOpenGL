@@ -2,20 +2,22 @@
 
 #include "event/event.h"
 
+#include <glm/vec2.hpp>
+
 class MouseMoveEvent : public Event
 {
 public:
-    explicit MouseMoveEvent(double x, double y);
+    explicit MouseMoveEvent(glm::vec2 pos, glm::vec2 lastPos);
 
     EventType type() const override
     {
         return EventType::MOUSE_MOVE;
     }
 
-    double x() const;
-    double y() const;
+    glm::vec2 position() const;
+    glm::vec2 lastPosition() const;
 
 private:
-    double _x;
-    double _y;
+    glm::vec2 _pos;
+    glm::vec2 _lastPos;
 };

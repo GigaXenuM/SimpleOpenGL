@@ -1,10 +1,8 @@
 #pragma once
 
-#include "event/event.h"
+#include "event/keyevents/keyactionevent.h"
 
-#include "event/keyevents/keyboard.h"
-
-class KeyPressEvent : public Event
+class KeyPressEvent : public KeyActionEvent
 {
 public:
     explicit KeyPressEvent(Keyboard::Key key, Keyboard::Modifier modifier);
@@ -13,11 +11,4 @@ public:
     {
         return EventType::KEY_PRESS;
     }
-
-    Keyboard::Key key() const;
-    Keyboard::Modifier modifier() const;
-
-private:
-    Keyboard::Key _key;
-    Keyboard::Modifier _modifier;
 };

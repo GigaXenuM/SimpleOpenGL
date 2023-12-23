@@ -9,6 +9,9 @@
 #include "glm/ext/matrix_clip_space.hpp"
 #include "glm/ext/matrix_transform.hpp"
 
+const float CAMERA_SENSIVITY{ 0.05f };
+const float MAX_VERTICAL_ANGLE{ 89.0f };
+
 Scene::Camera::Camera(double fov, double aspectRatio, double renderDistance)
     : _fov{ fov },
       _aspectRatio{ aspectRatio },
@@ -82,26 +85,15 @@ void Scene::Camera::keyReleaseEvent(KeyReleaseEvent *event)
 
 void Scene::Camera::mouseMoveEvent(MouseMoveEvent *event)
 {
-    if (_firstMouse)
-    {
-        _lastMousePosX = event->x();
-        _lastMousePosY = event->y();
-        _firstMouse = false;
-    }
+    const glm::vec2 deltaPos{ event->position() - event->lastPosition() };
 
-    const float sensivity{ 0.05f };
+    _yaw += (deltaPos.x) * CAMERA_SENSIVITY;
+    _pitch -= (deltaPos.y) * CAMERA_SENSIVITY;
 
-    _yaw += (event->x() - _lastMousePosX) * sensivity;
-    _pitch -= (event->y() - _lastMousePosY) * sensivity;
-    _lastMousePosX = event->x();
-    _lastMousePosY = event->y();
-
-    const float maxHorisontalAngle{ 89.0f };
-
-    if (_pitch > maxHorisontalAngle)
-        _pitch = maxHorisontalAngle;
-    if (_pitch < -maxHorisontalAngle)
-        _pitch = -maxHorisontalAngle;
+    if (_pitch > MAX_VERTICAL_ANGLE)
+        _pitch = MAX_VERTICAL_ANGLE;
+    if (_pitch < -MAX_VERTICAL_ANGLE)
+        _pitch = -MAX_VERTICAL_ANGLE;
 }
 
 void Scene::Camera::update()

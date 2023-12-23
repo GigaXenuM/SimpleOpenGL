@@ -30,10 +30,15 @@ set(HEADER_FILES
 
     src/event/event.h
     src/event/eventhandler.h
-    src/event/mouseevents/mousemoveevent.h
     src/event/keyevents/keyboard.h
+    src/event/keyevents/keyactionevent.h
     src/event/keyevents/keypressevent.h
     src/event/keyevents/keyreleaseevent.h
+    src/event/mouseevents/mouseactionevent.h
+    src/event/mouseevents/mousepressevent.h
+    src/event/mouseevents/mousemoveevent.h
+    src/event/mouseevents/mousereleaseevent.h
+    src/event/mouseevents/mouse.h
 )
 
 # Add source files
@@ -58,9 +63,14 @@ set(SOURCE_FILES
     src/model/modelitem/modelitem.cpp
     src/model/mesh/mesh.cpp
 
-    src/event/mouseevents/mousemoveevent.cpp
+    src/event/eventhandler.cpp
+    src/event/keyevents/keyactionevent.cpp
     src/event/keyevents/keypressevent.cpp
     src/event/keyevents/keyreleaseevent.cpp
+    src/event/mouseevents/mouseactionevent.cpp
+    src/event/mouseevents/mousepressevent.cpp
+    src/event/mouseevents/mousemoveevent.cpp
+    src/event/mouseevents/mousereleaseevent.cpp
 )
 
 include_directories(

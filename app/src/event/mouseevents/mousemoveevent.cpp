@@ -1,15 +1,15 @@
 #include "mousemoveevent.h"
 
-MouseMoveEvent::MouseMoveEvent(double x, double y) : _x{ x }, _y{ y }
+MouseMoveEvent::MouseMoveEvent(glm::vec2 pos, glm::vec2 lastPos) : _pos{ pos }, _lastPos{ lastPos }
 {
 }
 
-double MouseMoveEvent::x() const
+glm::vec2 MouseMoveEvent::position() const
 {
-    return _x;
+    return _pos;
 }
 
-double MouseMoveEvent::y() const
+glm::vec2 MouseMoveEvent::lastPosition() const
 {
-    return _y;
+    return _lastPos;
 }

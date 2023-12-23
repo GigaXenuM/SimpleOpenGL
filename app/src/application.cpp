@@ -8,7 +8,7 @@
 #include "event/mouseevents/mousemoveevent.h"
 #include "mainwindow.h"
 
-#include "tools/color.h"
+glm::vec2 LAST_MOUSE_POS{ 0, 0 };
 
 void keyboardCallback(GLFWwindow *window, int key, int scancode, int action, int mods);
 void cursorPosCallback(GLFWwindow *window, double x, double y);
@@ -36,6 +36,8 @@ int Application::run()
 
     glfwSetInputMode(glfwWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
+    defineCursorPos(glfwWindow);
+
     glfwSetCursorPosCallback(glfwWindow, cursorPosCallback);
     glfwSetKeyCallback(glfwWindow, keyboardCallback);
 
@@ -50,6 +52,13 @@ int Application::run()
     }
 
     return 0;
+}
+
+void Application::defineCursorPos(GLFWwindow *window)
+{
+    double x{ 0 }, y{ 0 };
+    glfwGetCursorPos(window, &x, &y);
+    LAST_MOUSE_POS = { x, y };
 }
 
 void keyboardCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
@@ -74,6 +83,9 @@ void cursorPosCallback(GLFWwindow *window, double x, double y)
 {
     MainWindow *handle{ static_cast<MainWindow *>(glfwGetWindowUserPointer(window)) };
 
-    MouseMoveEvent event(x, y);
+    const glm::vec2 currentMousePos{ x, y };
+    MouseMoveEvent event(currentMousePos, LAST_MOUSE_POS);
     handle->handleEvent(&event);
+
+    LAST_MOUSE_POS = currentMousePos;
 }

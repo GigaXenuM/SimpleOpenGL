@@ -9,8 +9,6 @@ class Event;
 namespace Private::Scene
 {
 
-using ::Scene::EventHandler;
-
 class SceneImpl : public EventHandler
 {
 protected:
