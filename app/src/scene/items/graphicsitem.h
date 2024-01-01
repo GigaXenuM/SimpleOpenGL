@@ -2,14 +2,10 @@
 
 #include "iitem.h"
 
+#include "utils/internal-id/internalid.h"
+#include "GPU-tools/shadertype.h"
+
 #include <glm/glm.hpp>
-
-#include <memory>
-
-namespace Model
-{
-class ModelItem;
-}
 
 namespace Scene
 {
@@ -17,15 +13,15 @@ namespace Scene
 class GraphicsItem : public IItem
 {
 public:
-    GraphicsItem(std::shared_ptr<Model::ModelItem> modelItem);
+    GraphicsItem(Utils::InternalId modelId, glm::mat4 model3D, GPU::ShaderType shaderType);
 
-    void draw(unsigned int programId) const override;
-
-    void setModel(glm::mat4 model);
-    const glm::mat4 &model() const override;
+    Utils::InternalId modelId() const override;
+    const glm::mat4 &model3D() const override;
+    GPU::ShaderType shaderType() const override;
 
 private:
-    std::shared_ptr<Model::ModelItem> _modelItem;
-    glm::mat4 _model;
+    Utils::InternalId _modelId;
+    glm::mat4 _model3D;
+    GPU::ShaderType _shaderType{ GPU::ShaderType::Common };
 };
 } // namespace Scene

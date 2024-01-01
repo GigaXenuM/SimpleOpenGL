@@ -7,26 +7,32 @@ set(HEADER_FILES
     src/iapplication.h
     src/application.h
 
-    src/tools/color.h    
-    src/tools/texture.h
-    src/tools/vertex.h
-    src/tools/stb_image.h
-    src/tools/texturetype.h
+    src/utils/stb-image/stb_image.h
+    src/utils/internal-id/internalid.h
+    src/utils/file-loader/fileloader.h
 
-    src/scene/scene.h
-    src/model/mesh/mesh.h
+    src/content/contentcontroller.h
+    src/content/shadercontext.h
+
+    src/scene/scenecontroller.h
     src/scene/camera/camera.h
     src/scene/items/iitem.h
     src/scene/items/graphicsitem.h
-    src/scene/private/sceneimpl.h
 
-    src/shader/ishaderwrapper.h
-    src/shader/shader.h
-    src/shader/program.h
+    src/GPU-tools/igpuidentifier.h
+    src/GPU-tools/shader.h
+    src/GPU-tools/iprogram.h
+    src/GPU-tools/program.h
+    src/GPU-tools/gpucontext.h
+    src/GPU-tools/shadertype.h
 
-    src/model/fileLoader/fileloader.h
-    src/model/modelitem/modelitem.h
-    src/model/mesh/mesh.h
+    src/model/modelcontroller.h
+    src/model/vertex.h
+    src/model/mesh.h
+    src/model/item/iitem.h
+    src/model/item/item.h
+    src/model/obj-loader/objloader.h
+    src/model/obj-loader/datatype.h
 
     src/event/event.h
     src/event/eventhandler.h
@@ -49,19 +55,24 @@ set(SOURCE_FILES
 
     src/application.cpp
 
-    src/tools/stb_image.cpp
+    src/utils/stb-image/stb_image.cpp
+    src/utils/internal-id/internalid.cpp
+    src/utils/file-loader/fileloader.cpp
 
-    src/shader/shader.cpp
-    src/shader/program.cpp
+    src/GPU-tools/shader.cpp
+    src/GPU-tools/program.cpp
 
-    src/scene/scene.cpp
+    src/content/contentcontroller.cpp
+    src/content/shadercontext.cpp
+
+    src/scene/scenecontroller.cpp
     src/scene/camera/camera.cpp
     src/scene/items/graphicsitem.cpp
-    src/scene/private/sceneimpl.cpp
 
-    src/model/fileLoader/fileloader.cpp
-    src/model/modelitem/modelitem.cpp
-    src/model/mesh/mesh.cpp
+    src/model/modelcontroller.cpp
+    src/model/mesh.cpp
+    src/model/item/item.cpp
+    src/model/obj-loader/objloader.cpp
 
     src/event/eventhandler.cpp
     src/event/keyevents/keyactionevent.cpp

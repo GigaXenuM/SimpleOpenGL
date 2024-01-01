@@ -1,16 +1,20 @@
 #pragma once
 
-#include "tools/color.h"
+#include "event/eventhandler.h"
+
+#include <glm/glm.hpp>
+
+#include <memory>
 
 class GLFWwindow;
 class Event;
 
-namespace Scene
+namespace Content
 {
-class Scene;
+class Controller;
 }
 
-class MainWindow final
+class MainWindow final : public EventHandler
 {
 public:
     static MainWindow &instance();
@@ -18,12 +22,9 @@ public:
     int width() const;
     int height() const;
 
-    void init();
-    void draw();
+    void render();
 
-    void setBackgroundColor(const Tools::Color &color);
-
-    void handleEvent(Event *event);
+    void setBackgroundColor(const glm::vec4 &color);
 
     __forceinline GLFWwindow *getGLFWWindow()
     {
@@ -34,15 +35,16 @@ private:
     explicit MainWindow(int width, int height, const char *title);
     ~MainWindow();
 
-    static MainWindow _instance;
-
+    static GLFWwindow *init(int width, int height, const char *title);
     void prepareForDrawing();
 
+    static MainWindow _instance;
+
     GLFWwindow *_window{ nullptr };
-    Scene::Scene *_scene{ nullptr };
+    std::shared_ptr<Content::Controller> _contentController;
 
     int _width{ 0 };
     int _height{ 0 };
     const char *_title{ nullptr };
-    Tools::Color _backgroundColor;
+    glm::vec4 _backgroundColor;
 };

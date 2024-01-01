@@ -15,12 +15,6 @@ void cursorPosCallback(GLFWwindow *window, double x, double y);
 
 Application::Application() : _window{ &MainWindow::instance() }
 {
-    glfwInit();
-
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
     _window->setBackgroundColor({ 0.3f, 0.3f, 0.3f, 1.0f });
 }
 
@@ -31,7 +25,6 @@ Application::~Application()
 
 int Application::run()
 {
-    _window->init();
     GLFWwindow *glfwWindow{ _window->getGLFWWindow() };
 
     glfwSetInputMode(glfwWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -41,10 +34,9 @@ int Application::run()
     glfwSetCursorPosCallback(glfwWindow, cursorPosCallback);
     glfwSetKeyCallback(glfwWindow, keyboardCallback);
 
-    /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(glfwWindow))
     {
-        _window->draw();
+        _window->render();
 
         glfwSwapBuffers(glfwWindow);
 

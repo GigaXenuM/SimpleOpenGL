@@ -29,11 +29,9 @@ public:
     const glm::mat4 &view() const;
 
     // EventHandler interface
-    void handleEvent(Event *event) override;
-
-    void keyPressEvent(KeyPressEvent *event);
-    void keyReleaseEvent(KeyReleaseEvent *event);
-    void mouseMoveEvent(MouseMoveEvent *event);
+    void keyPressEvent(KeyPressEvent *event) override;
+    void keyReleaseEvent(KeyReleaseEvent *event) override;
+    void mouseMoveEvent(MouseMoveEvent *event) override;
 
     void update();
 

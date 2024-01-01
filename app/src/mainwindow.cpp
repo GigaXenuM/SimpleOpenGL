@@ -1,21 +1,23 @@
 #include "mainwindow.h"
 
+#include "scene/scenecontroller.h"
+#include "content/contentcontroller.h"
+
 #include <glad/glad.h>
-
-#include "scene/scene.h"
-
 #include <GLFW/glfw3.h>
 
 MainWindow MainWindow::_instance{ 1366, 768, "Window" };
 
 MainWindow::MainWindow(int width, int height, const char *title)
-    : _window{ nullptr },
+    : _window{ init(width, height, title) },
       _width{ width },
       _height{ height },
       _title{ title },
       _backgroundColor{ .0f, .0f, .0f, .0f },
-      _scene{ new Scene::Scene(width, height) }
+      _contentController{ std::make_shared<Content::Controller>(width, height) }
 {
+    glfwSetWindowUserPointer(_window, this);
+    addEventHandler(_contentController->sceneController().get());
 }
 
 MainWindow::~MainWindow()
@@ -38,19 +40,23 @@ int MainWindow::height() const
     return _height;
 }
 
-void MainWindow::init()
+GLFWwindow *MainWindow::init(int width, int height, const char *title)
 {
-    _window = glfwCreateWindow(_width, _height, _title, NULL, NULL);
-    glfwMakeContextCurrent(_window);
+    glfwInit();
 
-    glfwSetWindowUserPointer(_window, this);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+    GLFWwindow *window = glfwCreateWindow(width, height, title, NULL, NULL);
+    glfwMakeContextCurrent(window);
 
     gladLoadGL();
-    glViewport(0, 0, _width, _height);
+    glViewport(0, 0, width, height);
 
     glEnable(GL_DEPTH_TEST);
 
-    _scene->init();
+    return window;
 }
 
 void MainWindow::prepareForDrawing()
@@ -59,19 +65,14 @@ void MainWindow::prepareForDrawing()
     glClearColor(_backgroundColor.r, _backgroundColor.g, _backgroundColor.b, _backgroundColor.a);
 }
 
-void MainWindow::draw()
+void MainWindow::render()
 {
     prepareForDrawing();
 
-    _scene->draw();
+    _contentController->render();
 }
 
-void MainWindow::setBackgroundColor(const Tools::Color &color)
+void MainWindow::setBackgroundColor(const glm::vec4 &color)
 {
     _backgroundColor = color;
-}
-
-void MainWindow::handleEvent(Event *event)
-{
-    _scene->handleEvent(event);
 }

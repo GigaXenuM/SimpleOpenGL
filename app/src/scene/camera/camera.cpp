@@ -1,7 +1,5 @@
 #include "camera.h"
 
-#include "event/event.h"
-
 #include "event/keyevents/keypressevent.h"
 #include "event/keyevents/keyreleaseevent.h"
 #include "event/mouseevents/mousemoveevent.h"
@@ -53,24 +51,6 @@ const glm::mat4 &Scene::Camera::projection() const
 const glm::mat4 &Scene::Camera::view() const
 {
     return _view;
-}
-
-void Scene::Camera::handleEvent(Event *event)
-{
-    switch (event->type())
-    {
-    case Event::EventType::KEY_PRESS:
-        keyPressEvent(static_cast<KeyPressEvent *>(event));
-        return;
-    case Event::EventType::KEY_RELEASE:
-        keyReleaseEvent(static_cast<KeyReleaseEvent *>(event));
-        return;
-    case Event::EventType::MOUSE_MOVE:
-        mouseMoveEvent(static_cast<MouseMoveEvent *>(event));
-        return;
-    default:
-        return;
-    }
 }
 
 void Scene::Camera::keyPressEvent(KeyPressEvent *event)

@@ -1,25 +1,22 @@
 #include "graphicsitem.h"
 
-#include "model/modelitem/modelitem.h"
-#include "model/mesh/mesh.h"
-
-Scene::GraphicsItem::GraphicsItem(std::shared_ptr<Model::ModelItem> modelItem)
-    : _modelItem{ modelItem }
+Scene::GraphicsItem::GraphicsItem(Utils::InternalId modelId, glm::mat4 model3D,
+                                  GPU::ShaderType shaderType)
+    : _modelId{ modelId }, _model3D{ model3D }, _shaderType{ shaderType }
 {
 }
 
-void Scene::GraphicsItem::draw(unsigned int programId) const
+Utils::InternalId Scene::GraphicsItem::modelId() const
 {
-    for (const auto &mesh : _modelItem->meshes())
-        mesh->draw(programId);
+    return _modelId;
 }
 
-void Scene::GraphicsItem::setModel(glm::mat4 model)
+const glm::mat4 &Scene::GraphicsItem::model3D() const
 {
-    _model = model;
+    return _model3D;
 }
 
-const glm::mat4 &Scene::GraphicsItem::model() const
+GPU::ShaderType Scene::GraphicsItem::shaderType() const
 {
-    return _model;
+    return _shaderType;
 }

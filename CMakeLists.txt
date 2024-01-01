@@ -24,7 +24,4 @@ target_link_libraries(${PROJECT_NAME} glad)
 add_subdirectory(libs/glm)
 target_link_libraries(${PROJECT_NAME} glm)
 
-add_subdirectory(libs/assimp)
-target_link_libraries(${PROJECT_NAME} assimp)
-
 set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/)
