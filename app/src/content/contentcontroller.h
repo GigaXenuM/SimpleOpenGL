@@ -6,7 +6,7 @@
 namespace Model
 {
 class Controller;
-}
+} // namespace Model
 
 namespace Scene
 {
@@ -37,6 +37,11 @@ private:
     static std::shared_ptr<GPU::IProgram> createShaderProgram(const char *vertexShaderSource,
                                                               const char *fragmentShaderSource);
     static ShaderProgramMap shaderProgramMap();
+
+    static std::vector<std::string> modelPathes();
+
+    void createContent();
+    void loadModels();
 
     std::shared_ptr<Model::Controller> _modelController;
     std::shared_ptr<Scene::Controller> _sceneController;

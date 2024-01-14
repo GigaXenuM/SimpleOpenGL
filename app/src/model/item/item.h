@@ -10,17 +10,15 @@ class Mesh;
 class Item : public IItem
 {
 public:
-    explicit Item(std::shared_ptr<Model::Mesh> mesh);
+    explicit Item(Meshes meshes);
 
-    std::shared_ptr<Model::Mesh> mesh() const override;
+    const Meshes &meshes() const override;
 
-    GPU::Context GPUContext() const override;
-    void setGPUContext(GPU::Context context) override;
-
-    unsigned int verticesCount() const override;
+    std::vector<GPU::Context> GPUContext() const override;
+    void addGPUContext(GPU::Context contextUnit) override;
 
 private:
-    std::shared_ptr<Model::Mesh> _mesh;
-    GPU::Context _gpuContext;
+    Meshes _meshes;
+    std::vector<GPU::Context> _gpuContext;
 };
 } // namespace Model

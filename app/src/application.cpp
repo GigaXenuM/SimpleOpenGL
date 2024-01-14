@@ -27,8 +27,6 @@ int Application::run()
 {
     GLFWwindow *glfwWindow{ _window->getGLFWWindow() };
 
-    glfwSetInputMode(glfwWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-
     defineCursorPos(glfwWindow);
 
     glfwSetCursorPosCallback(glfwWindow, cursorPosCallback);
@@ -37,9 +35,7 @@ int Application::run()
     while (!glfwWindowShouldClose(glfwWindow))
     {
         _window->render();
-
         glfwSwapBuffers(glfwWindow);
-
         glfwPollEvents();
     }
 

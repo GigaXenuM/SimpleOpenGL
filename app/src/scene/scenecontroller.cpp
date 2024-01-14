@@ -25,12 +25,6 @@ Controller::Controller(std::shared_ptr<Model::Controller> modelController,
     addEventHandler(_camera.get());
 }
 
-void Controller::init()
-{
-    for (auto item : _items)
-        _modelController->loadOnGPU(item->modelId());
-}
-
 void Controller::render() const
 {
     _camera->update();
@@ -42,6 +36,8 @@ void Controller::render() const
 
         shaderProgram->use();
 
+        shaderProgram->setVec3("lightPosition", { -10.f, 25.5f, -2.f });
+
         shaderProgram->setMat4("projection", _camera->projection());
         shaderProgram->setMat4("view", _camera->view());
         shaderProgram->setMat4("model", item->model3D());
@@ -50,10 +46,9 @@ void Controller::render() const
     }
 }
 
-void Controller::createGraphicsItem(std::shared_ptr<Model::Mesh> mesh, glm::mat4 model,
+void Controller::createGraphicsItem(Utils::InternalId modelId, glm::mat4 model,
                                     GPU::ShaderType shaderType)
 {
-    const Utils::InternalId modelId{ _modelController->createModelItem(mesh) };
     const auto graphicsIttem{ std::make_shared<GraphicsItem>(modelId, model, shaderType) };
     _items.push_back(graphicsIttem);
 }

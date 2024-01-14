@@ -13,6 +13,7 @@ set(HEADER_FILES
 
     src/content/contentcontroller.h
     src/content/shadercontext.h
+    src/content/mesh-loader/meshloader.h
 
     src/scene/scenecontroller.h
     src/scene/camera/camera.h
@@ -31,8 +32,6 @@ set(HEADER_FILES
     src/model/mesh.h
     src/model/item/iitem.h
     src/model/item/item.h
-    src/model/obj-loader/objloader.h
-    src/model/obj-loader/datatype.h
 
     src/event/event.h
     src/event/eventhandler.h
@@ -64,6 +63,7 @@ set(SOURCE_FILES
 
     src/content/contentcontroller.cpp
     src/content/shadercontext.cpp
+    src/content/mesh-loader/meshloader.cpp
 
     src/scene/scenecontroller.cpp
     src/scene/camera/camera.cpp
@@ -72,7 +72,6 @@ set(SOURCE_FILES
     src/model/modelcontroller.cpp
     src/model/mesh.cpp
     src/model/item/item.cpp
-    src/model/obj-loader/objloader.cpp
 
     src/event/eventhandler.cpp
     src/event/keyevents/keyactionevent.cpp
@@ -85,7 +84,7 @@ set(SOURCE_FILES
 )
 
 include_directories(
-    "${CMAKE_SOURCE_DIR}/app/src"
+    "./src"
 )
 
 # we don't want to copy if we're building in the source dir

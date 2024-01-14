@@ -15,12 +15,20 @@ Controller::Controller()
 {
 }
 
-Utils::InternalId Controller::createModelItem(std::shared_ptr<Model::Mesh> mesh)
+Utils::InternalId Controller::createModelItem(std::vector<std::shared_ptr<Mesh>> meshes)
 {
     const Utils::InternalId id;
-    _itemMap.emplace(id, std::make_shared<Model::Item>(std::move(mesh)));
+    _itemMap.emplace(id, std::make_shared<Model::Item>(std::move(meshes)));
+    _itemIds.push_back(id);
+
+    loadOnGPU(id);
 
     return id;
+}
+
+std::vector<Utils::InternalId> Controller::itemIds() const
+{
+    return _itemIds;
 }
 
 std::shared_ptr<IItem> Controller::findItem(Utils::InternalId modelId) const
@@ -39,40 +47,54 @@ void Controller::loadOnGPU(Utils::InternalId modelId)
     const std::shared_ptr<IItem> item{ findItem(modelId) };
     assert(item != nullptr);
 
-    const std::shared_ptr<Mesh> mesh{ item->mesh() };
+    for (const std::shared_ptr<Mesh> mesh : item->meshes())
+    {
+        GPU::Context gpuContext;
 
-    GPU::Context gpuContext;
+        glGenBuffers(1, &gpuContext.vertexBufferId);
+        glGenVertexArrays(1, &gpuContext.vertexArrayId);
+        glGenBuffers(1, &gpuContext.elementBufferId);
 
-    glGenBuffers(1, &gpuContext.vertexBufferId);
-    glGenVertexArrays(1, &gpuContext.vertexArrayId);
+        glBindVertexArray(gpuContext.vertexArrayId);
 
-    glBindVertexArray(gpuContext.vertexArrayId);
+        glBindBuffer(GL_ARRAY_BUFFER, gpuContext.vertexBufferId);
+        glBufferData(GL_ARRAY_BUFFER, mesh->verticesMemorySize(), &mesh->vertices().front(),
+                     GL_STATIC_DRAW);
 
-    glBindBuffer(GL_ARRAY_BUFFER, gpuContext.vertexBufferId);
-    glBufferData(GL_ARRAY_BUFFER, mesh->verticesMemorySize(), &mesh->vertices().front(),
-                 GL_STATIC_DRAW);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, gpuContext.elementBufferId);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh->indicesMemorySize(), &mesh->indices().front(),
+                     GL_STATIC_DRAW);
 
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<void *>(0));
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex),
+                              reinterpret_cast<void *>(0));
+        glEnableVertexAttribArray(1);
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex),
+                              reinterpret_cast<void *>(offsetof(Vertex, texturePosition)));
+        glEnableVertexAttribArray(2);
+        glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex),
+                              reinterpret_cast<void *>(offsetof(Vertex, normal)));
 
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex),
-                          reinterpret_cast<void *>(offsetof(Vertex, texturePosition)));
+        glBindVertexArray(NULL);
+        glBindBuffer(GL_ARRAY_BUFFER, NULL);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, NULL);
 
-    glBindVertexArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+        gpuContext.indicesSize = mesh->indicesCount();
 
-    item->setGPUContext(gpuContext);
+        item->addGPUContext(gpuContext);
+    }
 }
 
 void Controller::render(Utils::InternalId modelId) const
 {
     const std::shared_ptr<Model::IItem> modelItem{ findItem(modelId) };
 
-    const GPU::Context gpuContext{ modelItem->GPUContext() };
-    glBindVertexArray(gpuContext.vertexArrayId);
-    glDrawArrays(GL_TRIANGLES, 0, modelItem->verticesCount());
-    glBindVertexArray(0);
+    for (const GPU::Context &gpuContext : modelItem->GPUContext())
+    {
+        glBindVertexArray(gpuContext.vertexArrayId);
+        glDrawElements(GL_TRIANGLES, gpuContext.indicesSize, GL_UNSIGNED_INT, NULL);
+        glBindVertexArray(NULL);
+    }
 
     glActiveTexture(GL_TEXTURE0);
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <vector>
 
 namespace Model
 {
@@ -17,11 +18,11 @@ namespace Model
 class IItem
 {
 public:
-    virtual std::shared_ptr<Model::Mesh> mesh() const = 0;
+    using Meshes = std::vector<std::shared_ptr<Model::Mesh>>;
 
-    virtual GPU::Context GPUContext() const = 0;
-    virtual void setGPUContext(GPU::Context context) = 0;
+    virtual const Meshes &meshes() const = 0;
 
-    virtual unsigned int verticesCount() const = 0;
+    virtual std::vector<GPU::Context> GPUContext() const = 0;
+    virtual void addGPUContext(GPU::Context context) = 0;
 };
 } // namespace Model

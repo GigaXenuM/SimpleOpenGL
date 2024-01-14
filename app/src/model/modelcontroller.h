@@ -17,16 +17,17 @@ class Controller
 public:
     Controller();
 
-    Utils::InternalId createModelItem(std::shared_ptr<Model::Mesh> mesh);
-
-    void loadOnGPU(Utils::InternalId modelId);
+    Utils::InternalId createModelItem(std::vector<std::shared_ptr<Model::Mesh>> meshes);
+    std::vector<Utils::InternalId> itemIds() const;
 
     void render(Utils::InternalId modelId) const;
 
 private:
     std::shared_ptr<IItem> findItem(Utils::InternalId modelId) const;
 
+    void loadOnGPU(Utils::InternalId modelId);
+
     ItemMap _itemMap;
-    std::vector<Utils::InternalId> _itemIdsOnGPU;
+    std::vector<Utils::InternalId> _itemIds;
 };
 } // namespace Model
