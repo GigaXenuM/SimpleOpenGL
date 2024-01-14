@@ -51,6 +51,8 @@ GLFWwindow *MainWindow::init(int width, int height, const char *title)
     GLFWwindow *window = glfwCreateWindow(width, height, title, NULL, NULL);
     glfwMakeContextCurrent(window);
 
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
     gladLoadGL();
     glViewport(0, 0, width, height);
 

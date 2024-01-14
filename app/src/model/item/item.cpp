@@ -1,29 +1,25 @@
 #include "item.h"
 
-#include "model/mesh.h"
-
 #include <glad/glad.h>
 
-Model::Item::Item(std::shared_ptr<Model::Mesh> mesh) : _mesh{ std::move(mesh) }
+namespace Model
+{
+Item::Item(Meshes meshes) : _meshes{ std::move(meshes) }
 {
 }
 
-std::shared_ptr<Model::Mesh> Model::Item::mesh() const
+const Item::Meshes &Item::meshes() const
 {
-    return _mesh;
+    return _meshes;
 }
 
-GPU::Context Model::Item::GPUContext() const
+std::vector<GPU::Context> Item::GPUContext() const
 {
     return _gpuContext;
 }
 
-void Model::Item::setGPUContext(GPU::Context context)
+void Item::addGPUContext(GPU::Context contextUnit)
 {
-    _gpuContext = context;
+    _gpuContext.push_back(contextUnit);
 }
-
-unsigned int Model::Item::verticesCount() const
-{
-    return _mesh->verticesCount();
-}
+} // namespace Model

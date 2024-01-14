@@ -32,11 +32,10 @@ class Controller : public EventHandler
 public:
     explicit Controller(std::shared_ptr<Model::Controller> modelController,
                         ShaderProgramMap shaderProgramMap, int width, int height);
-
-    void init();
     void render() const;
 
-    void createGraphicsItem(std::shared_ptr<Model::Mesh> mesh, glm::mat4 model, GPU::ShaderType shaderType);
+    void createGraphicsItem(Utils::InternalId modelId, glm::mat4 model,
+                            GPU::ShaderType shaderType);
 
 private:
     std::shared_ptr<Model::Controller> _modelController;

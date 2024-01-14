@@ -4,7 +4,8 @@
 
 namespace Model
 {
-Mesh::Mesh(std::vector<Vertex> vertices) : _vertices{ std::move(vertices) }
+Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices)
+    : _vertices{ std::move(vertices) }, _indices{ indices }
 {
 }
 
@@ -21,5 +22,20 @@ unsigned int Mesh::verticesMemorySize() const
 unsigned int Mesh::verticesCount() const
 {
     return _vertices.size();
+}
+
+const std::vector<unsigned int> &Mesh::indices() const
+{
+    return _indices;
+}
+
+unsigned int Mesh::indicesMemorySize() const
+{
+    return _indices.size() * sizeof(unsigned int);
+}
+
+unsigned int Mesh::indicesCount() const
+{
+    return _indices.size();
 }
 } // namespace Model
